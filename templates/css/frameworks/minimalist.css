@@ -1,0 +1,533 @@
+/*!
+ * Freelance Template System - Minimalist Framework
+ * Tier: Budget ($300-500 | Rp 1,000,000 - Rp 2,000,000)
+ * Target: Tech startups, consultants, small businesses
+
+ * Value: Clean, professional, Apple-inspired design
+ * Build Time: 8-12 hours
+ */
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES - MINIMALIST PALETTES
+   ========================================================================== */
+
+:root {
+  /* Default Minimalist Palette (Core: Clean, subtle, sophisticated) */
+  --fl-minimalist-primary: rgba(255, 255, 255, 1); /* Crisp White */
+  --fl-minimalist-secondary: rgba(248, 249, 250, 1); /* Light Gray Background */
+  --fl-minimalist-accent: rgba(0, 122, 255, 1); /* Apple Blue Accent */
+  --fl-minimalist-text: rgba(29, 29, 31, 1); /* Dark Gray for Readability */
+  --fl-minimalist-muted: rgba(
+    134,
+    134,
+    139,
+    1
+  ); /* Muted Gray for Secondary Info */
+  --fl-minimalist-border: rgba(210, 210, 215, 1); /* Subtle Border Gray */
+
+  /* Minimalist - Monochromatic Cool (Professional calm) */
+  --fl-minimalist-mono-cool-primary: rgba(
+    242,
+    242,
+    247,
+    1
+  ); /* Cool Off-White */
+
+  --fl-minimalist-mono-cool-secondary: rgba(
+    233,
+    235,
+    238,
+    1
+  ); /* Light Cool Gray */
+  --fl-minimalist-mono-cool-accent: rgba(
+    95,
+    124,
+    138,
+    1
+  ); /* Muted Slate Blue */
+  --fl-minimalist-mono-cool-text: rgba(44, 62, 80, 1); /* Deep Charcoal */
+  --fl-minimalist-mono-cool-muted: rgba(
+    143,
+    168,
+    184,
+    1
+  ); /* Medium Cool Gray */
+  --fl-minimalist-mono-cool-border: rgba(
+    206,
+    212,
+    218,
+    1
+  ); /* Light Cool Border */
+
+  /* Minimalist - Warm Neutrals (Approachable warmth) */
+  --fl-minimalist-warm-neutral-primary: rgba(
+    253,
+    251,
+    248,
+    1
+  ); /* Creamy White */
+  --fl-minimalist-warm-neutral-secondary: rgba(
+    242,
+    237,
+    230,
+    1
+  ); /* Soft Beige */
+  --fl-minimalist-warm-neutral-accent: rgba(
+    139,
+    128,
+    85,
+    1
+  ); /* Earthy Olive Green */
+
+  --fl-minimalist-warm-neutral-text: rgba(74, 68, 62, 1); /* Soft Dark Brown */
+  --fl-minimalist-warm-neutral-muted: rgba(
+    163,
+    157,
+    144,
+    1
+  ); /* Muted Warm Gray */
+
+  --fl-minimalist-warm-neutral-border: rgba(
+    217,
+    210,
+    198,
+    1
+  ); /* Light Warm Border */
+
+  /* Minimalist - High-Contrast Minimal (Bold simplicity) */
+  --fl-minimalist-high-contrast-primary: rgba(
+    255,
+    255,
+    255,
+    1
+  ); /* Pure White */
+  --fl-minimalist-high-contrast-secondary: rgba(0, 0, 0, 1); /* Pure Black */
+  --fl-minimalist-high-contrast-accent: rgba(
+    10,
+    61,
+    98,
+    1
+  ); /* Deep Navy Accent */
+  --fl-minimalist-high-contrast-text: rgba(26, 26, 26, 1); /* Near Black */
+  --fl-minimalist-high-contrast-muted: rgba(102, 102, 102, 1); /* Medium Gray */
+  --fl-minimalist-high-contrast-border: rgba(
+    51,
+    51,
+    51,
+    1
+  ); /* Dark Gray Border */
+
+  /* Typography */
+  --fl-minimalist-font-system:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --fl-minimalist-font-mono:
+    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
+    monospace;
+
+  /* Spacing System (Apple-inspired) */
+  --fl-minimalist-space-xs: 0.25rem; /* 4px */
+  --fl-minimalist-space-sm: 0.5rem; /* 8px */
+  --fl-minimalist-space-md: 1rem; /* 16px */
+  --fl-minimalist-space-lg: 1.5rem; /* 24px */
+  --fl-minimalist-space-xl: 2rem; /* 32px */
+  --fl-minimalist-space-2xl: 3rem; /* 48px */
+  --fl-minimalist-space-3xl: 4rem; /* 64px */
+
+  /* Border Radius */
+  --fl-minimalist-radius-sm: 0.375rem; /* 6px */
+  --fl-minimalist-radius-md: 0.5rem; /* 8px */
+
+  --fl-minimalist-radius-lg: 0.75rem; /* 12px */
+  --fl-minimalist-radius-xl: 1rem; /* 16px */
+
+  /* Shadows (Subtle, Apple-like) */
+  --fl-minimalist-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --fl-minimalist-shadow-md:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --fl-minimalist-shadow-lg:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --fl-minimalist-shadow-xl:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Transitions */
+  --fl-minimalist-transition-fast: 150ms ease-in-out;
+  --fl-minimalist-transition-normal: 300ms ease-in-out;
+  --fl-minimalist-transition-slow: 500ms ease-in-out;
+}
+
+/* ==========================================================================
+   BASE STYLES
+   ========================================================================== */
+
+.fl-minimalist {
+  font-family: var(--fl-minimalist-font-system);
+
+  background-color: var(--fl-minimalist-primary);
+  color: var(--fl-minimalist-text);
+
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   BUTTONS - MINIMALIST
+   ========================================================================== */
+
+.fl-btn--minimalist {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fl-minimalist-space-sm);
+  padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-lg);
+  border: 1px solid var(--fl-minimalist-border);
+  border-radius: var(--fl-minimalist-radius-md);
+  background-color: var(--fl-minimalist-primary);
+  color: var(--fl-minimalist-text);
+  font-family: var(--fl-minimalist-font-system);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: all var(--fl-minimalist-transition-fast);
+  box-shadow: var(--fl-minimalist-shadow-sm);
+}
+
+.fl-btn--minimalist:hover {
+  background-color: var(--fl-minimalist-secondary);
+  border-color: var(--fl-minimalist-muted);
+  box-shadow: var(--fl-minimalist-shadow-md);
+  transform: translateY(-1px);
+}
+
+.fl-btn--minimalist:focus {
+  outline: 2px solid var(--fl-minimalist-accent);
+  outline-offset: 2px;
+}
+
+.fl-btn--minimalist:active {
+  transform: translateY(0);
+  box-shadow: var(--fl-minimalist-shadow-sm);
+}
+
+/* Primary Button Variant */
+.fl-btn--minimalist.fl-btn--primary {
+  background-color: var(--fl-minimalist-accent);
+  border-color: var(--fl-minimalist-accent);
+  color: var(--fl-minimalist-primary);
+}
+
+.fl-btn--minimalist.fl-btn--primary:hover {
+  background-color: rgba(0, 122, 255, 0.9);
+  border-color: rgba(0, 122, 255, 0.9);
+}
+
+/* Button Sizes */
+.fl-btn--minimalist.fl-btn--sm {
+  padding: var(--fl-minimalist-space-xs) var(--fl-minimalist-space-md);
+  font-size: 0.75rem;
+}
+
+.fl-btn--minimalist.fl-btn--lg {
+  padding: var(--fl-minimalist-space-md) var(--fl-minimalist-space-2xl);
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+
+   CARDS - MINIMALIST
+   ========================================================================== */
+
+.fl-card--minimalist {
+  background-color: var(--fl-minimalist-primary);
+  border: 1px solid var(--fl-minimalist-border);
+  border-radius: var(--fl-minimalist-radius-lg);
+  box-shadow: var(--fl-minimalist-shadow-sm);
+  transition: all var(--fl-minimalist-transition-normal);
+  overflow: hidden;
+}
+
+.fl-card--minimalist:hover {
+  box-shadow: var(--fl-minimalist-shadow-lg);
+
+  transform: translateY(-2px);
+}
+
+.fl-card__header--minimalist {
+  padding: var(--fl-minimalist-space-lg);
+
+  border-bottom: 1px solid var(--fl-minimalist-border);
+}
+
+.fl-card__title--minimalist {
+  margin: 0;
+
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--fl-minimalist-text);
+}
+
+.fl-card__content--minimalist {
+  padding: var(--fl-minimalist-space-lg);
+}
+
+.fl-card__text--minimalist {
+  margin: 0;
+
+  color: var(--fl-minimalist-muted);
+  line-height: 1.5;
+}
+
+.fl-card__footer--minimalist {
+  padding: var(--fl-minimalist-space-lg);
+  border-top: 1px solid var(--fl-minimalist-border);
+  background-color: var(--fl-minimalist-secondary);
+}
+
+/* ==========================================================================
+
+   FORMS - MINIMALIST
+   ========================================================================== */
+
+.fl-form--minimalist {
+  max-width: 100%;
+}
+
+.fl-form__group--minimalist {
+  margin-bottom: var(--fl-minimalist-space-lg);
+}
+
+.fl-form__label--minimalist {
+  display: block;
+  margin-bottom: var(--fl-minimalist-space-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fl-minimalist-text);
+}
+
+.fl-form__input--minimalist,
+.fl-form__textarea--minimalist,
+.fl-form__select--minimalist {
+  width: 100%;
+  padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-md);
+  border: 1px solid var(--fl-minimalist-border);
+  border-radius: var(--fl-minimalist-radius-md);
+  background-color: var(--fl-minimalist-primary);
+  color: var(--fl-minimalist-text);
+  font-family: var(--fl-minimalist-font-system);
+  font-size: 0.875rem;
+  transition: all var(--fl-minimalist-transition-fast);
+}
+
+.fl-form__input--minimalist:focus,
+.fl-form__textarea--minimalist:focus,
+.fl-form__select--minimalist:focus {
+  outline: none;
+  border-color: var(--fl-minimalist-accent);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.fl-form__textarea--minimalist {
+  resize: vertical;
+
+  min-height: 100px;
+}
+
+/* ==========================================================================
+   NAVIGATION - MINIMALIST
+   ========================================================================== */
+
+.fl-nav--minimalist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--fl-minimalist-space-md) 0;
+  background-color: var(--fl-minimalist-primary);
+  border-bottom: 1px solid var(--fl-minimalist-border);
+}
+
+.fl-nav__brand--minimalist {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fl-minimalist-text);
+  text-decoration: none;
+}
+
+.fl-nav__menu--minimalist {
+  display: flex;
+  align-items: center;
+  gap: var(--fl-minimalist-space-xl);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fl-nav__link--minimalist {
+  color: var(--fl-minimalist-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--fl-minimalist-transition-fast);
+}
+
+.fl-nav__link--minimalist:hover,
+.fl-nav__link--minimalist.fl-nav__link--active {
+  color: var(--fl-minimalist-text);
+}
+
+/* ==========================================================================
+   HERO SECTIONS - MINIMALIST
+
+   ========================================================================== */
+
+.fl-hero--minimalist {
+  padding: var(--fl-minimalist-space-3xl) 0;
+  text-align: center;
+  background-color: var(--fl-minimalist-secondary);
+}
+
+.fl-hero__title--minimalist {
+  margin: 0 0 var(--fl-minimalist-space-lg) 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+
+  font-weight: 700;
+  color: var(--fl-minimalist-text);
+  line-height: 1.2;
+}
+
+.fl-hero__subtitle--minimalist {
+  margin: 0 0 var(--fl-minimalist-space-xl) 0;
+  font-size: 1.125rem;
+  color: var(--fl-minimalist-muted);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fl-hero__cta--minimalist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fl-minimalist-space-md);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   FOOTER - MINIMALIST
+   ========================================================================== */
+
+.fl-footer--minimalist {
+  padding: var(--fl-minimalist-space-2xl) 0;
+  background-color: var(--fl-minimalist-secondary);
+  border-top: 1px solid var(--fl-minimalist-border);
+}
+
+.fl-footer__content--minimalist {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--fl-minimalist-space-xl);
+  margin-bottom: var(--fl-minimalist-space-xl);
+}
+
+.fl-footer__section--minimalist {
+  /* Grid item styles handled by parent */
+}
+
+.fl-footer__title--minimalist {
+  margin: 0 0 var(--fl-minimalist-space-md) 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fl-minimalist-text);
+}
+
+.fl-footer__link--minimalist {
+  color: var(--fl-minimalist-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  transition: color var(--fl-minimalist-transition-fast);
+}
+
+.fl-footer__link--minimalist:hover {
+  color: var(--fl-minimalist-text);
+}
+
+.fl-footer__bottom--minimalist {
+  padding-top: var(--fl-minimalist-space-lg);
+  border-top: 1px solid var(--fl-minimalist-border);
+  text-align: center;
+}
+
+.fl-footer__copyright--minimalist {
+  margin: 0;
+
+  font-size: 0.75rem;
+  color: var(--fl-minimalist-muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE UTILITIES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .fl-nav--minimalist {
+    flex-direction: column;
+    gap: var(--fl-minimalist-space-md);
+  }
+
+  .fl-nav__menu--minimalist {
+    gap: var(--fl-minimalist-space-lg);
+  }
+
+  .fl-hero--minimalist {
+    padding: var(--fl-minimalist-space-2xl) 0;
+  }
+
+  .fl-hero__cta--minimalist {
+    flex-direction: column;
+  }
+
+  .fl-footer__content--minimalist {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+
+   PALETTE VARIANT CLASSES
+   ========================================================================== */
+
+/* Cool Monochromatic Variant */
+.fl-minimalist--mono-cool {
+  --fl-minimalist-primary: var(--fl-minimalist-mono-cool-primary);
+
+  --fl-minimalist-secondary: var(--fl-minimalist-mono-cool-secondary);
+  --fl-minimalist-accent: var(--fl-minimalist-mono-cool-accent);
+  --fl-minimalist-text: var(--fl-minimalist-mono-cool-text);
+  --fl-minimalist-muted: var(--fl-minimalist-mono-cool-muted);
+
+  --fl-minimalist-border: var(--fl-minimalist-mono-cool-border);
+}
+
+/* Warm Neutral Variant */
+
+.fl-minimalist--warm-neutral {
+  --fl-minimalist-primary: var(--fl-minimalist-warm-neutral-primary);
+  --fl-minimalist-secondary: var(--fl-minimalist-warm-neutral-secondary);
+  --fl-minimalist-accent: var(--fl-minimalist-warm-neutral-accent);
+  --fl-minimalist-text: var(--fl-minimalist-warm-neutral-text);
+  --fl-minimalist-muted: var(--fl-minimalist-warm-neutral-muted);
+  --fl-minimalist-border: var(--fl-minimalist-warm-neutral-border);
+}
+
+/* High Contrast Variant */
+.fl-minimalist--high-contrast {
+  --fl-minimalist-primary: var(--fl-minimalist-high-contrast-primary);
+  --fl-minimalist-secondary: var(--fl-minimalist-high-contrast-secondary);
+  --fl-minimalist-accent: var(--fl-minimalist-high-contrast-accent);
+  --fl-minimalist-text: var(--fl-minimalist-high-contrast-text);
+  --fl-minimalist-muted: var(--fl-minimalist-high-contrast-muted);
+  --fl-minimalist-border: var(--fl-minimalist-high-contrast-border);
+}

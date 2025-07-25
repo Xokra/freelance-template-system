@@ -1,0 +1,43 @@
+{
+  "system": {
+    "version": "1.0",
+    "created": "2025-07-25",
+    "description": "HTML/CSS Freelance Template System - Client Database"
+
+  },
+
+  "tiers": {
+    "budget": {
+      "styles": ["minimalist", "organic"],
+      "pricing": "$300-500",
+      "buildTime": "8-12 hours",
+      "target": "Tech startups, consultants, small businesses"
+    },
+    "standard": {
+      "styles": ["glassmorphism", "neumorphism"],
+      "pricing": "$800-1200",
+      "buildTime": "15-20 hours",
+      "target": "Creative agencies, design studios, modern brands"
+    },
+    "premium": {
+      "styles": ["cyberpunk", "brutalist", "luxury"],
+      "pricing": "$1500-2500",
+      "buildTime": "25-35 hours",
+      "target": "Law firms, real estate, high-end services"
+    },
+    "custom": {
+      "pricing": "$3000+",
+      "description": "Portfolio-demonstrated custom capabilities"
+    }
+
+  },
+
+  "clients": [],
+  "projects": [],
+  "templates": {
+    "completed": [],
+    "inProgress": [],
+    "planned": []
+  }
+
+}
