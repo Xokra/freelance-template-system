@@ -1,0 +1,1165 @@
+/*!
+ * GLASSMORPHISM CSS FRAMEWORK - STANDARD TIER (Enhanced for Awwwards-Level)
+ * Target: Creative agencies, design studios, modern brands, tech innovators
+ * Pricing: Rp 2,500,000 - Rp 5,000,000 | Build: 15-20 hours
+ */
+
+/* ==========================================================================
+
+   CSS RESET & FUNDAMENTALS
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fl-font-system);
+  font-size: var(--fl-text-base);
+  line-height: var(--fl-leading-relaxed);
+  color: var(--fl-text-primary);
+
+  background: var(--fl-bg-gradient);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* SMARTER: Add a subtle perspective for 3D transforms to look better */
+  perspective: 1000px;
+}
+
+img,
+video,
+svg,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES - GLOBAL & GLASSMORPHISM-SPECIFIC
+
+   ========================================================================== */
+:root {
+  /* Base Typography System */
+  --fl-font-system:
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --fl-font-display:
+    "Poppins", "Segoe UI", sans-serif; /* SMARTER: Add a dedicated display font */
+
+  /* Spacing Scale (8px base) */
+
+  --fl-space-1: 0.25rem; /* 4px */
+
+  --fl-space-2: 0.5rem; /* 8px */
+  --fl-space-3: 0.75rem; /* 12px */
+
+  --fl-space-4: 1rem; /* 16px */
+  --fl-space-5: 1.25rem; /* 20px */
+  --fl-space-6: 1.5rem; /* 24px */
+  --fl-space-8: 2rem; /* 32px */
+  --fl-space-10: 2.5rem; /* 40px */
+  --fl-space-12: 3rem; /* 48px */
+  --fl-space-16: 4rem; /* 64px */
+  --fl-space-20: 5rem; /* 80px */ /* SMARTER: Larger spacing for hero sections */
+
+  /* Typography Scale - SMARTER: Use clamp for fluid typography */
+  --fl-text-xs: 0.75rem;
+  --fl-text-sm: 0.875rem;
+  --fl-text-base: 1rem;
+  --fl-text-lg: 1.125rem;
+  --fl-text-xl: 1.25rem;
+
+  --fl-text-2xl: 1.5rem;
+  --fl-text-3xl: clamp(1.875rem, 5vw, 2.5rem); /* 30px to 40px */
+  --fl-text-4xl: clamp(2.25rem, 7vw, 3.5rem); /* 36px to 56px */
+  --fl-text-5xl: clamp(3rem, 9vw, 5rem); /* 48px to 80px */
+
+  --fl-text-6xl: clamp(3.75rem, 11vw, 6rem); /* 60px to 96px */
+
+  /* Line Heights */
+  --fl-leading-tight: 1.25;
+  --fl-leading-normal: 1.5;
+  --fl-leading-relaxed: 1.625;
+
+  /* Border Radius */
+  --fl-radius-sm: 0.375rem; /* 6px */
+  --fl-radius: 0.5rem; /* 8px */
+  --fl-radius-md: 0.75rem; /* 12px */
+
+  --fl-radius-lg: 1rem; /* 16px */
+
+  --fl-radius-xl: 1.5rem; /* 24px */
+  --fl-radius-full: 9999px; /* SMARTER: For pill-shaped elements */
+
+  /* Glass Effects - SMARTER: More distinct blur levels and a subtle noise texture */
+  --fl-blur: blur(16px) saturate(180%);
+  --fl-blur-light: blur(10px) saturate(160%);
+  --fl-blur-heavy: blur(24px) saturate(200%);
+
+  --fl-noise-texture: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+
+  /* Transitions - SMARTER: More specific cubic-bezier and performance hints */
+  --fl-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --fl-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --fl-transition-normal: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slightly bouncy */
+  --fl-transition-slow: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Default to Cool & Cosmic palette */
+  --fl-bg-gradient: linear-gradient(
+    135deg,
+    hsl(200, 70%, 50%) 0%,
+    hsl(200, 90%, 70%) 100%
+  ); /* HSL for easier adjustments */
+  --fl-bg-primary: hsla(0, 0%, 100%, 0.15); /* White with opacity */
+  --fl-bg-secondary: hsla(0, 0%, 100%, 0.1);
+  --fl-bg-tertiary: hsla(0, 0%, 100%, 0.05);
+  --fl-text-primary: hsla(0, 0%, 100%, 1);
+  --fl-text-secondary: hsla(0, 0%, 100%, 0.8);
+  --fl-text-muted: hsla(0, 0%, 100%, 0.6);
+  --fl-border-primary: hsla(0, 0%, 100%, 0.2);
+  --fl-border-secondary: hsla(0, 0%, 100%, 0.1);
+  --fl-accent-primary: hsla(
+    190,
+    70%,
+    65%,
+    1
+  ); /* Adjusted for better contrast */
+  --fl-accent-secondary: hsla(190, 70%, 65%, 0.8);
+
+  /* SMARTER: Additional variables for dynamic lighting/reflections */
+  --fl-glass-shine-color: hsla(0, 0%, 100%, 0.3); /* White for reflection */
+  --fl-glass-shadow-color: hsla(0, 0%, 0%, 0.25); /* Darker shadow */
+}
+
+/* ==========================================================================
+   PALETTE VARIANTS - SMARTER: Use HSL for gradients, allowing dynamic adjustments
+   ========================================================================== */
+
+/* Cool & Cosmic (Default) */
+body.fl-glassmorphism-cool-cosmic {
+  --fl-bg-gradient: linear-gradient(
+    135deg,
+    hsl(200, 70%, 50%) 0%,
+    hsl(200, 90%, 70%) 100%
+  );
+  --fl-accent-primary: hsla(190, 70%, 65%, 1);
+  --fl-accent-secondary: hsla(190, 70%, 65%, 0.8);
+  /* Other colors remain white-based transparent */
+}
+
+/* Warm & Energetic */
+
+body.fl-glassmorphism-warm-energetic {
+  --fl-bg-gradient: linear-gradient(
+    135deg,
+    hsl(350, 80%, 70%) 0%,
+    hsl(330, 90%, 75%) 100%
+  );
+  --fl-accent-primary: hsla(40, 90%, 70%, 1); /* Golden yellow */
+  --fl-accent-secondary: hsla(40, 90%, 70%, 0.8);
+  --fl-text-primary: hsla(
+    0,
+    0%,
+    100%,
+    1
+  ); /* Maintain white for text on dark/bright background */
+
+  --fl-text-secondary: hsla(0, 0%, 100%, 0.8);
+  --fl-text-muted: hsla(0, 0%, 100%, 0.6);
+}
+
+/* Emerald Hues */
+body.fl-glassmorphism-emerald-hues {
+  --fl-bg-gradient: linear-gradient(
+    135deg,
+    hsl(165, 75%, 35%) 0%,
+    hsl(140, 70%, 55%) 100%
+  );
+  --fl-accent-primary: hsla(130, 80%, 60%, 1); /* Brighter green */
+  --fl-accent-secondary: hsla(130, 80%, 60%, 0.8);
+  --fl-text-primary: hsla(0, 0%, 100%, 1);
+  --fl-text-secondary: hsla(0, 0%, 100%, 0.8);
+  --fl-text-muted: hsla(0, 0%, 100%, 0.6);
+}
+
+/* Duotone Gradients - SMARTER: More visually striking duotone */
+
+body.fl-glassmorphism-duotone {
+  --fl-bg-gradient: linear-gradient(
+    135deg,
+    hsl(240, 100%, 50%) 0%,
+    hsl(300, 100%, 50%) 100%
+  ); /* Blue to Magenta */
+  --fl-bg-primary: hsla(0, 0%, 100%, 0.1);
+  --fl-bg-secondary: hsla(0, 0%, 100%, 0.08);
+  --fl-bg-tertiary: hsla(0, 0%, 100%, 0.05);
+  --fl-text-primary: hsla(0, 0%, 100%, 1);
+  --fl-text-secondary: hsla(0, 0%, 100%, 0.8);
+  --fl-text-muted: hsla(0, 0%, 100%, 0.6);
+
+  --fl-border-primary: hsla(0, 0%, 100%, 0.15);
+  --fl-border-secondary: hsla(0, 0%, 100%, 0.08);
+
+  --fl-accent-primary: hsla(60, 100%, 70%, 1); /* Yellow-green for contrast */
+  --fl-accent-secondary: hsla(60, 100%, 70%, 0.8);
+}
+
+/* ==========================================================================
+   GLASS SURFACE BASE - SMARTER: Adding subtle grain, reflections, and shadow
+   ========================================================================== */
+.fl-glass {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+  -webkit-backdrop-filter: var(--fl-blur);
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-lg);
+  transition: var(
+    --fl-transition-normal
+  ); /* SMARTER: Use more sophisticated transition */
+  position: relative;
+  overflow: hidden; /* For inner elements like reflections */
+
+  box-shadow: 0 4px 30px var(--fl-glass-shadow-color); /* SMARTER: More pronounced shadow */
+  will-change:
+    transform, box-shadow, background, border; /* SMARTER: Performance hint */
+}
+
+/* SMARTER: Add a subtle inner "grain" or "noise" texture */
+.fl-glass::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--fl-noise-texture);
+  pointer-events: none;
+
+  z-index: 1; /* Above background, below content */
+  opacity: 0.8; /* Subtle */
+}
+
+/* SMARTER: Add a subtle "light reflection" element */
+.fl-glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150%; /* Wider than element for sweep effect */
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--fl-glass-shine-color) 20%,
+
+    transparent 50%
+  );
+  transform: translateX(-100%) rotate(25deg); /* Start off-screen, tilted */
+
+  transition: transform var(--fl-transition-slow);
+
+  pointer-events: none;
+  z-index: 2; /* Above noise, below content */
+
+  opacity: 0.8;
+  will-change: transform;
+}
+
+.fl-glass:hover::after {
+  transform: translateX(100%) rotate(25deg); /* SMARTER: Animate reflection on hover */
+  transition: transform 0.8s ease-in-out; /* Longer, smooth sweep */
+}
+
+.fl-glass--light {
+  backdrop-filter: var(--fl-blur-light);
+  -webkit-backdrop-filter: var(--fl-blur-light);
+
+  background: hsla(0, 0%, 100%, 0.25); /* Lighter background */
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+}
+
+.fl-glass--heavy {
+  backdrop-filter: var(--fl-blur-heavy);
+  -webkit-backdrop-filter: var(--fl-blur-heavy);
+  background: hsla(0, 0%, 100%, 0.1); /* Slightly darker for heavier blur */
+  border: 1px solid hsla(0, 0%, 100%, 0.15);
+}
+
+/* ==========================================================================
+   BUTTON COMPONENT - SMARTER: Enhanced hover feedback with deeper glass effect
+   ========================================================================== */
+.fl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fl-space-2);
+
+  padding: var(--fl-space-3) var(--fl-space-6);
+  font-family: var(
+    --fl-font-display
+  ); /* SMARTER: Use display font for buttons */
+  font-size: var(--fl-text-base);
+  font-weight: 600; /* Bolder for prominence */
+  line-height: var(--fl-leading-tight);
+  text-decoration: none;
+
+  border: none;
+  border-radius: var(--fl-radius-md); /* Slightly more rounded */
+  cursor: pointer;
+  transition: all var(--fl-transition-normal); /* SMARTER: Use normal transition */
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* SMARTER: Default subtle shadow */
+  will-change:
+    transform, background, border-color, box-shadow; /* Performance hint */
+
+  text-shadow: 0 0 5px hsla(0, 0%, 0%, 0.2); /* SMARTER: Subtle text shadow for depth */
+}
+
+.fl-btn--glassmorphism {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+
+  -webkit-backdrop-filter: var(--fl-blur);
+
+  border: 1px solid var(--fl-border-primary);
+  color: var(--fl-text-primary);
+}
+
+.fl-btn--glassmorphism:hover {
+  background: var(--fl-bg-secondary);
+  border-color: var(--fl-accent-primary);
+  transform: translateY(-3px) scale(1.02) rotateZ(0.5deg); /* SMARTER: More dynamic lift & slight rotation */
+  box-shadow: 0 10px 30px var(--fl-glass-shadow-color); /* SMARTER: Stronger, diffused shadow */
+}
+
+.fl-btn--glassmorphism:active {
+  transform: translateY(0) scale(0.98); /* SMARTER: Tactile press */
+
+  box-shadow: 0 2px 10px var(--fl-glass-shadow-color);
+  background: var(--fl-bg-tertiary); /* Even darker on active */
+}
+
+.fl-btn--glassmorphism.fl-btn--primary {
+  background: var(--fl-accent-primary);
+  color: hsla(0, 0%, 100%, 1); /* Ensure white text */
+  border-color: var(--fl-accent-primary);
+  box-shadow: 0 8px 25px hsla(var(--_accent-hue), 70%, 65%, 0.4); /* SMARTER: Color-matched shadow */
+}
+
+.fl-btn--glassmorphism.fl-btn--primary:hover {
+  background: var(--fl-accent-secondary);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 40px var(--fl-accent-primary),
+    0 10px 30px hsla(var(--_accent-hue), 70%, 65%, 0.6); /* SMARTER: Double shadow for glow */
+}
+
+.fl-btn--sm {
+  padding: var(--fl-space-2) var(--fl-space-4);
+  font-size: var(--fl-text-sm);
+}
+
+.fl-btn--lg {
+  padding: var(--fl-space-4) var(--fl-space-8);
+  font-size: var(--fl-text-lg);
+  border-radius: var(
+    --fl-radius-xl
+  ); /* SMARTER: Pill shape for large buttons */
+}
+
+.fl-btn__icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+/* ==========================================================================
+
+   CARD COMPONENT - SMARTER: Adding interactive depth and shine
+
+   ========================================================================== */
+.fl-card {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+  -webkit-backdrop-filter: var(--fl-blur);
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-xl);
+  padding: var(--fl-space-8);
+  transition: all var(--fl-transition-normal); /* SMARTER: Use normal transition */
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 8px 30px var(--fl-glass-shadow-color); /* Initial shadow */
+  will-change: transform, box-shadow, background, border;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.fl-card--glassmorphism:hover {
+  background: var(--fl-bg-secondary);
+  border-color: var(--fl-accent-primary);
+  transform: translateY(-8px) scale(1.01) perspective(1000px) rotateX(1deg); /* SMARTER: Deeper lift, slight scale, subtle 3D tilt */
+  box-shadow: 0 25px 50px hsla(0, 0%, 0%, 0.3); /* SMARTER: More pronounced shadow on hover */
+}
+
+/* SMARTER: Add an inner border gradient effect on hover */
+.fl-card--glassmorphism::after {
+  content: "";
+  position: absolute;
+  inset: 0px; /* Covers the entire element */
+  border-radius: var(--fl-radius-xl);
+  border: 2px solid transparent; /* Transparent default border */
+  background: linear-gradient(
+      45deg,
+      var(--fl-accent-primary),
+      transparent 30%,
+      transparent 70%,
+      var(--fl-accent-primary)
+    )
+    border-box; /* Gradient for border */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--fl-transition-normal);
+  pointer-events: none;
+}
+
+.fl-card--glassmorphism:hover::after {
+  opacity: 1; /* Show gradient border on hover */
+}
+
+.fl-card__header {
+  margin-bottom: var(--fl-space-6);
+}
+
+.fl-card__title {
+  margin: 0;
+  font-family: var(--fl-font-display); /* Use display font */
+  font-size: var(--fl-text-3xl); /* Use fluid typography */
+  font-weight: 700;
+  line-height: var(--fl-leading-tight);
+  color: var(--fl-text-primary);
+  text-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.2); /* SMARTER: Text shadow for titles */
+}
+
+.fl-card__content {
+  margin-bottom: var(--fl-space-6);
+}
+
+.fl-card__text {
+  margin: 0 0 var(--fl-space-4);
+  color: var(--fl-text-secondary);
+  line-height: var(--fl-leading-relaxed);
+}
+
+.fl-card__text:last-child {
+  margin-bottom: 0;
+}
+
+.fl-card__footer {
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   FORM COMPONENTS - SMARTER: Enhanced interactive focus and visual feedback
+   ========================================================================== */
+
+.fl-form {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+  -webkit-backdrop-filter: var(--fl-blur);
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-xl);
+  padding: var(--fl-space-8);
+  box-shadow: 0 8px 30px var(--fl-glass-shadow-color);
+  will-change: transform, box-shadow;
+}
+
+.fl-form__group {
+  margin-bottom: var(--fl-space-6);
+  position: relative; /* For floating label */
+}
+
+.fl-form__group:last-child {
+  margin-bottom: 0;
+}
+
+.fl-form__label {
+  display: block;
+  margin-bottom: var(--fl-space-2);
+  font-size: var(--fl-text-sm);
+  font-weight: 500;
+  color: var(--fl-text-primary);
+  transition: all var(--fl-transition-fast); /* SMARTER: For floating label */
+  transform-origin: left top;
+}
+
+.fl-form__input,
+.fl-form__textarea,
+.fl-form__select {
+  width: 100%;
+  padding: var(--fl-space-3) var(--fl-space-4);
+  font-family: inherit;
+  font-size: var(--fl-text-base);
+  line-height: var(--fl-leading-normal);
+  color: var(--fl-text-primary);
+
+  background: var(--fl-bg-secondary);
+  backdrop-filter: var(--fl-blur-light);
+  -webkit-backdrop-filter: var(--fl-blur-light);
+  border: 1px solid var(--fl-border-secondary);
+  border-radius: var(--fl-radius);
+  transition: all var(--fl-transition-normal); /* SMARTER: More fluid transition */
+
+  box-shadow: inset 0 1px 3px hsla(0, 0%, 0%, 0.1); /* Subtle inner shadow */
+
+  will-change: border-color, box-shadow;
+}
+
+.fl-form__input::placeholder,
+.fl-form__textarea::placeholder {
+  color: var(--fl-text-muted);
+  opacity: 0.7; /* SMARTER: Slightly more visible placeholder */
+  transition: opacity var(--fl-transition-fast);
+}
+
+.fl-form__input:focus::placeholder,
+.fl-form__textarea:focus::placeholder {
+  opacity: 0; /* SMARTER: Fade out placeholder on focus */
+}
+
+.fl-form__input:focus,
+.fl-form__textarea:focus,
+.fl-form__select:focus {
+  outline: none;
+  border-color: var(--fl-accent-primary);
+  box-shadow:
+    0 0 0 4px hsla(var(--_accent-hue), 70%, 65%, 0.2),
+    inset 0 1px 5px hsla(0, 0%, 0%, 0.2); /* SMARTER: Accent glow and deeper inner shadow */
+  background: var(
+    --fl-bg-tertiary
+  ); /* SMARTER: Slightly darker on focus for contrast */
+}
+
+/* SMARTER: Floating label effect (requires JS to add/remove 'has-content' or 'is-focused' class, or using :placeholder-shown) */
+.fl-form__input:focus + .fl-form__label,
+.fl-form__input:not(:placeholder-shown) + .fl-form__label,
+.fl-form__textarea:focus + .fl-form__label,
+.fl-form__textarea:not(:placeholder-shown) + .fl-form__label {
+  transform: translateY(calc(-100% - var(--fl-space-2))) scale(0.85);
+  color: var(--fl-accent-primary);
+}
+
+.fl-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ==========================================================================
+   NAVIGATION COMPONENT - SMARTER: Dynamic sticky header, more active links
+   ========================================================================== */
+.fl-nav {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+  -webkit-backdrop-filter: var(--fl-blur);
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-xl);
+  padding: var(--fl-space-4) var(--fl-space-6);
+
+  position: sticky;
+  top: var(--fl-space-4);
+  z-index: 1000; /* SMARTER: Higher z-index for fixed/sticky elements */
+  box-shadow: 0 4px 20px var(--fl-glass-shadow-color);
+  transition: all var(--fl-transition-normal); /* SMARTER: For sticky header behavior */
+  will-change: transform, background, box-shadow, padding;
+}
+
+/* SMARTER: Sticky header shrinkage effect (requires JS to add a 'scrolled' class) */
+.fl-nav.scrolled {
+  padding: var(--fl-space-2) var(--fl-space-6);
+  top: 0;
+  border-radius: 0; /* More integrated with screen edge */
+
+  background: hsla(0, 0%, 100%, 0.08); /* Slightly less transparent */
+  box-shadow: 0 2px 15px hsla(0, 0%, 0%, 0.3);
+}
+
+.fl-nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 1200px;
+
+  margin: 0 auto;
+  min-height: 60px; /* Define a minimum height */
+  transition: min-height var(--fl-transition-normal); /* For shrinking */
+}
+
+.fl-nav.scrolled .fl-nav__container {
+  min-height: 50px; /* Smaller height when scrolled */
+}
+
+.fl-nav__logo {
+  font-family: var(--fl-font-display); /* Use display font */
+  font-size: var(--fl-text-xl);
+  font-weight: 700;
+
+  color: var(--fl-text-primary);
+  text-decoration: none;
+  transition: all var(--fl-transition-fast);
+  text-shadow: 0 0 10px hsla(0, 0%, 100%, 0.1); /* Subtle glow */
+}
+
+.fl-nav.scrolled .fl-nav__logo {
+  font-size: var(--fl-text-lg); /* Shrink logo on scroll */
+}
+
+.fl-nav__logo:hover {
+  color: var(--fl-accent-primary);
+}
+
+.fl-nav__menu {
+  display: flex;
+  align-items: center;
+  gap: var(--fl-space-6);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fl-nav__link {
+  color: var(--fl-text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--fl-transition-normal); /* SMARTER: Use normal transition */
+
+  position: relative;
+  padding: var(--fl-space-1); /* Add padding for a larger hit area */
+  will-change: color, transform;
+}
+
+/* SMARTER: Dynamic underline with springy effect and slight text lift */
+.fl-nav__link::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+
+  width: 0;
+  height: 2px;
+  background: var(--fl-accent-primary);
+  transform: translateX(-50%) scaleX(0); /* Start scaled to 0 */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* SMARTER: Springy ease-out-back */
+  transform-origin: center;
+
+  will-change: width, transform;
+}
+
+.fl-nav__link:hover,
+.fl-nav__link--active {
+  color: var(--fl-accent-primary);
+  transform: translateY(-2px); /* SMARTER: Subtle text lift on hover/active */
+}
+
+.fl-nav__link:hover::after,
+.fl-nav__link--active::after {
+  width: 100%;
+  transform: translateX(-50%) scaleX(1); /* SMARTER: Full width, no overshoot for elegance */
+}
+
+/* SMARTER: Add a mobile menu toggle icon */
+.fl-nav__toggle {
+  display: none; /* Hidden by default on desktop */
+  background: none;
+  border: none;
+  font-size: var(--fl-text-2xl);
+  color: var(--fl-text-primary);
+  cursor: pointer;
+  z-index: 1001; /* Above nav for interaction */
+}
+
+/* ==========================================================================
+   HERO COMPONENT - SMARTER: Animated background, fluid typography, subtle entry animations
+   ========================================================================== */
+.fl-hero {
+  background: var(--fl-bg-primary);
+
+  backdrop-filter: var(--fl-blur);
+
+  -webkit-backdrop-filter: var(--fl-blur);
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-xl);
+  padding: var(--fl-space-20) var(--fl-space-8); /* SMARTER: Larger padding for impact */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 60px var(--fl-glass-shadow-color);
+}
+
+/* SMARTER: Dynamic background gradient animation (more subtle and flowing) */
+.fl-hero::before {
+  content: "";
+  position: absolute;
+  top: -20%; /* Start higher */
+  left: -20%; /* Start left */
+
+  width: 140%; /* Larger to cover movement */
+  height: 140%; /* Larger to cover movement */
+  background: linear-gradient(
+    45deg,
+    hsla(var(--_bg-hue-1), var(--_bg-sat-1), var(--_bg-light-1), 0.1) 0%,
+    hsla(var(--_bg-hue-2), var(--_bg-sat-2), var(--_bg-light-2), 0.1) 50%,
+    hsla(var(--_bg-hue-3), var(--_bg-sat-3), var(--_bg-light-3), 0.1) 100%
+  );
+  /* SMARTER: Extracting hue/sat/light from background gradient for animation */
+  /* These need to be manually derived from your --fl-bg-gradient colors */
+  /* For 'Cool & Cosmic': */
+  --_bg-hue-1: 200;
+  --_bg-sat-1: 70%;
+  --_bg-light-1: 50%;
+  --_bg-hue-2: 200;
+  --_bg-sat-2: 90%;
+  --_bg-light-2: 70%;
+  --_bg-hue-3: 180;
+  --_bg-sat-3: 80%;
+  --_bg-light-3: 60%; /* Example third point */
+
+  animation: backgroundPan 30s linear infinite alternate; /* SMARTER: Slow, oscillating movement */
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+
+  filter: blur(5px); /* SMARTER: Apply a slight blur to background gradient */
+  will-change: transform, opacity;
+}
+
+@keyframes backgroundPan {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5%, -5%);
+  }
+  50% {
+    transform: translate(0, 5%);
+  }
+  75% {
+    transform: translate(-5%, -5%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.fl-hero__title {
+  margin: 0 auto var(--fl-space-6);
+
+  font-family: var(--fl-font-display); /* Use display font */
+  font-size: var(--fl-text-5xl); /* SMARTER: Use fluid typography */
+  font-weight: 800; /* Bolder for impact */
+  line-height: var(--fl-leading-tight);
+  color: var(--fl-text-primary);
+
+  text-shadow: 0 4px 15px hsla(0, 0%, 0%, 0.3); /* SMARTER: Deeper text shadow */
+  max-width: 900px;
+  /* SMARTER: Initial state for JS animation (e.g., opacity: 0; transform: translateY(20px);) */
+}
+
+.fl-hero__subtitle {
+  margin: 0 auto var(--fl-space-8);
+  font-size: var(--fl-text-xl); /* SMARTER: Use fluid typography */
+  color: var(--fl-text-secondary);
+  max-width: 700px;
+
+  line-height: var(--fl-leading-relaxed);
+  text-shadow: 0 1px 5px hsla(0, 0%, 0%, 0.1);
+  /* SMARTER: Initial state for JS animation */
+}
+
+.fl-hero__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fl-space-4);
+
+  flex-wrap: wrap;
+  /* SMARTER: Initial state for JS animation */
+}
+
+/* ==========================================================================
+   FOOTER COMPONENT - SMARTER: Refined layout, subtle link effects
+   ========================================================================== */
+.fl-footer {
+  background: var(--fl-bg-primary);
+  backdrop-filter: var(--fl-blur);
+  -webkit-backdrop-filter: var(--fl-blur);
+
+  border: 1px solid var(--fl-border-primary);
+  border-radius: var(--fl-radius-xl);
+  padding: var(--fl-space-12) var(--fl-space-8);
+  margin-top: var(--fl-space-16);
+  box-shadow: 0 -5px 20px var(--fl-glass-shadow-color); /* Shadow upwards */
+}
+
+.fl-footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--fl-space-4); /* Ensure container padding */
+}
+
+.fl-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  ); /* SMARTER: Slightly smaller min for more columns on wider screens */
+  gap: var(--fl-space-8);
+  margin-bottom: var(--fl-space-8);
+}
+
+.fl-footer__section h3 {
+  margin: 0 0 var(--fl-space-4);
+  font-family: var(--fl-font-display);
+  font-size: var(--fl-text-lg);
+  font-weight: 600;
+  color: var(--fl-text-primary);
+
+  text-shadow: 0 1px 5px hsla(0, 0%, 0%, 0.1);
+}
+
+.fl-footer__section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fl-footer__section li {
+  margin-bottom: var(--fl-space-2);
+}
+
+.fl-footer__section a {
+  color: var(--fl-text-secondary);
+
+  text-decoration: none;
+  transition: all var(--fl-transition-fast);
+  position: relative;
+}
+
+/* SMARTER: Underline/glow effect for footer links */
+.fl-footer__section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: var(--fl-accent-primary);
+
+  transition: width var(--fl-transition-fast);
+}
+
+.fl-footer__section a:hover {
+  color: var(--fl-accent-primary);
+}
+
+.fl-footer__section a:hover::after {
+  width: 100%;
+}
+
+.fl-footer__bottom {
+  border-top: 1px solid var(--fl-border-secondary);
+  padding-top: var(--fl-space-6);
+  text-align: center;
+  color: var(--fl-text-muted);
+  font-size: var(--fl-text-sm);
+  margin-top: var(--fl-space-6);
+}
+
+/* ==========================================================================
+   UTILITY CLASSES - SMARTER: Consistent padding for container
+   ========================================================================== */
+.fl-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--fl-space-8); /* SMARTER: More consistent padding across utilities */
+}
+
+.fl-grid {
+  display: grid;
+
+  gap: var(--fl-space-6);
+}
+
+.fl-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.fl-grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.fl-flex {
+  display: flex;
+  gap: var(--fl-space-4);
+}
+
+.fl-flex--center {
+  align-items: center;
+  justify-content: center;
+}
+
+.fl-text-center {
+  text-align: center;
+}
+
+.fl-text-accent {
+  color: var(--fl-accent-primary);
+}
+
+/* Spacing utilities - can be extended as needed */
+.fl-mb-0 {
+  margin-bottom: 0;
+}
+.fl-mb-4 {
+  margin-bottom: var(--fl-space-4);
+}
+.fl-mb-6 {
+  margin-bottom: var(--fl-space-6);
+}
+
+.fl-mb-8 {
+  margin-bottom: var(--fl-space-8);
+}
+.fl-mt-auto {
+  margin-top: auto;
+} /* Useful for aligning footer content in flex/grid */
+
+/* ==========================================================================
+   RESPONSIVE DESIGN - SMARTER: Fluid typography and mobile menu handling
+   ========================================================================== */
+@media (max-width: 768px) {
+  .fl-nav__menu {
+    /* SMARTER: Hide menu for mobile, show toggle */
+    display: none; /* Controlled by JS */
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + var(--fl-space-4)); /* Below nav bar */
+    left: var(--fl-space-4);
+    right: var(--fl-space-4);
+    background: var(--fl-bg-primary);
+    backdrop-filter: var(--fl-blur-light);
+    -webkit-backdrop-filter: var(--fl-blur-light);
+    border: 1px solid var(--fl-border-primary);
+    border-radius: var(--fl-radius-lg);
+    padding: var(--fl-space-6);
+    box-shadow: 0 10px 30px hsla(0, 0%, 0%, 0.3);
+    z-index: 999;
+    animation: fadeInSlideDown 0.3s ease-out forwards; /* SMARTER: Simple entry animation */
+  }
+
+  /* SMARTER: Class for toggling mobile menu visibility via JS */
+  .fl-nav__menu.is-open {
+    display: flex;
+  }
+
+  @keyframes fadeInSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fl-nav__toggle {
+    display: block; /* Show toggle button on mobile */
+  }
+
+  .fl-nav__link {
+    font-size: var(--fl-text-lg); /* Larger links for touch */
+    padding: var(--fl-space-2) 0;
+  }
+
+  .fl-hero {
+    padding: var(--fl-space-12) var(--fl-space-4);
+  }
+
+  .fl-hero__actions {
+    flex-direction: column;
+  }
+
+  .fl-card {
+    padding: var(--fl-space-6);
+  }
+
+  .fl-form {
+    padding: var(--fl-space-6);
+  }
+
+  .fl-container {
+    padding: 0 var(--fl-space-6); /* Adjust container padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .fl-card {
+    padding: var(--fl-space-4);
+  }
+
+  .fl-form {
+    padding: var(--fl-space-4);
+  }
+
+  .fl-nav {
+    padding: var(--fl-space-3) var(--fl-space-4);
+  }
+
+  .fl-container {
+    padding: 0 var(--fl-space-4); /* Further adjust container padding */
+  }
+}
+
+/* ==========================================================================
+
+   ACCESSIBILITY - SMARTER: Better focus styles and high contrast support
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    animation-delay: -1ms !important; /* SMARTER: Ensure no delay either */
+    transition-delay: -1ms !important;
+  }
+  /* Ensure no transforms when motion is reduced */
+  .fl-btn:hover,
+  .fl-card:hover,
+  .fl-btn:active,
+  .fl-nav__link:hover {
+    transform: none !important;
+  }
+  .fl-hero::before {
+    animation: none !important;
+    filter: none !important; /* Remove blur as well */
+  }
+  .fl-card::after,
+  .fl-glass::after {
+    opacity: 0 !important; /* Disable reflection/inner border effect */
+  }
+}
+
+/* Focus styles for keyboard navigation - SMARTER: More prominent and consistent */
+.fl-btn:focus-visible,
+.fl-form__input:focus-visible,
+.fl-form__textarea:focus-visible,
+.fl-form__select:focus-visible,
+.fl-nav__link:focus-visible {
+  outline: 3px solid var(--fl-accent-primary); /* SMARTER: Thicker outline */
+  outline-offset: 3px; /* SMARTER: More space */
+  border-color: var(--fl-accent-primary) !important; /* Force accent border */
+  box-shadow: 0 0 0 5px hsla(var(--_accent-hue), 70%, 65%, 0.3); /* SMARTER: Add a glow shadow */
+  /* SMARTER: Derive accent hue from accent-primary if it's HSL/RGB */
+  --_accent-hue: 190; /* Example for Cool & Cosmic */
+}
+
+/* High contrast mode support - SMARTER: Better contrast ratios and defined borders */
+@media (prefers-contrast: high) {
+  :root {
+    --fl-bg-primary: rgba(0, 0, 0, 0.8); /* Darker, more opaque background */
+    --fl-bg-secondary: rgba(0, 0, 0, 0.9);
+    --fl-bg-tertiary: rgba(0, 0, 0, 1);
+    --fl-text-primary: #ffffff;
+
+    --fl-text-secondary: #e0e0e0;
+    --fl-text-muted: #c0c0c0;
+
+    --fl-border-primary: #ffffff; /* Clear white border */
+    --fl-border-secondary: #cccccc;
+    --fl-accent-primary: #00ffff; /* High contrast accent (cyan) */
+    --fl-accent-secondary: #00cccc;
+    /* Remove transparent effects for clarity */
+    --fl-blur: none;
+    --fl-blur-light: none;
+    --fl-blur-heavy: none;
+    --fl-glass-shadow-color: rgba(
+      255,
+      255,
+      255,
+      0.5
+    ); /* Light shadow on dark */
+    --fl-glass-shine-color: transparent; /* Remove shine */
+    --fl-noise-texture: none; /* Remove noise */
+  }
+
+  .fl-glass,
+  .fl-btn,
+  .fl-card,
+  .fl-form {
+    background: var(--fl-bg-primary) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--fl-border-primary) !important; /* Ensure solid border */
+    box-shadow: none !important; /* Remove shadows */
+  }
+
+  .fl-btn--glassmorphism.fl-btn--primary {
+    background: var(--fl-accent-primary) !important;
+    color: var(--fl-bg-tertiary) !important; /* Black text on accent button */
+    border-color: var(--fl-accent-primary) !important;
+  }
+
+  .fl-btn:hover,
+  .fl-card:hover {
+    background: var(--fl-bg-secondary) !important;
+    border-color: var(--fl-accent-primary) !important;
+  }
+}

@@ -8,114 +8,114 @@
  */
 
 /* ==========================================================================
-   CSS CUSTOM PROPERTIES - MINIMALIST PALETTES
+   CSS RESET / NORMALIZE
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling on orientation change */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video,
+svg,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit; /* Inherit font from parent */
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   CSS CUSTOM PROPERTIES - MINIMALIST PALETTES & SEMANTIC MAPPING
    ========================================================================== */
 
 :root {
   /* Default Minimalist Palette (Core: Clean, subtle, sophisticated) */
-  --fl-minimalist-primary: rgba(255, 255, 255, 1); /* Crisp White */
-  --fl-minimalist-secondary: rgba(248, 249, 250, 1); /* Light Gray Background */
-  --fl-minimalist-accent: rgba(0, 122, 255, 1); /* Apple Blue Accent */
-  --fl-minimalist-text: rgba(29, 29, 31, 1); /* Dark Gray for Readability */
-  --fl-minimalist-muted: rgba(
-    134,
-    134,
-    139,
-    1
-  ); /* Muted Gray for Secondary Info */
-  --fl-minimalist-border: rgba(210, 210, 215, 1); /* Subtle Border Gray */
+  --fl-minimalist-palette-primary: 255, 255, 255; /* Crisp White */
+  --fl-minimalist-palette-secondary: 248, 249, 250; /* Light Gray Background */
+  --fl-minimalist-palette-accent: 0, 122, 255; /* Apple Blue Accent */
+  --fl-minimalist-palette-text: 29, 29, 31; /* Dark Gray for Readability */
+  --fl-minimalist-palette-muted:
+    134, 134, 139; /* Muted Gray for Secondary Info */
+  --fl-minimalist-palette-border: 210, 210, 215; /* Subtle Border Gray */
 
   /* Minimalist - Monochromatic Cool (Professional calm) */
-  --fl-minimalist-mono-cool-primary: rgba(
-    242,
-    242,
-    247,
-    1
-  ); /* Cool Off-White */
 
-  --fl-minimalist-mono-cool-secondary: rgba(
-    233,
-    235,
-    238,
-    1
-  ); /* Light Cool Gray */
-  --fl-minimalist-mono-cool-accent: rgba(
-    95,
-    124,
-    138,
-    1
-  ); /* Muted Slate Blue */
-  --fl-minimalist-mono-cool-text: rgba(44, 62, 80, 1); /* Deep Charcoal */
-  --fl-minimalist-mono-cool-muted: rgba(
-    143,
-    168,
-    184,
-    1
-  ); /* Medium Cool Gray */
-  --fl-minimalist-mono-cool-border: rgba(
-    206,
-    212,
-    218,
-    1
-  ); /* Light Cool Border */
+  --fl-minimalist-mono-cool-palette-primary: 242, 242, 247; /* Cool Off-White */
+  --fl-minimalist-mono-cool-palette-secondary:
+    233, 235, 238; /* Light Cool Gray */
+  --fl-minimalist-mono-cool-palette-accent: 95, 124, 138; /* Muted Slate Blue */
+  --fl-minimalist-mono-cool-palette-text: 44, 62, 80; /* Deep Charcoal */
+  --fl-minimalist-mono-cool-palette-muted: 143, 168, 184; /* Medium Cool Gray */
+
+  --fl-minimalist-mono-cool-palette-border:
+    206, 212, 218; /* Light Cool Border */
 
   /* Minimalist - Warm Neutrals (Approachable warmth) */
-  --fl-minimalist-warm-neutral-primary: rgba(
-    253,
-    251,
-    248,
-    1
-  ); /* Creamy White */
-  --fl-minimalist-warm-neutral-secondary: rgba(
-    242,
-    237,
-    230,
-    1
-  ); /* Soft Beige */
-  --fl-minimalist-warm-neutral-accent: rgba(
-    139,
-    128,
-    85,
-    1
-  ); /* Earthy Olive Green */
+  --fl-minimalist-warm-neutral-palette-primary:
+    253, 251, 248; /* Creamy White */
+  --fl-minimalist-warm-neutral-palette-secondary:
+    242, 237, 230; /* Soft Beige */
+  --fl-minimalist-warm-neutral-palette-accent:
+    139, 128, 85; /* Earthy Olive Green */
+  --fl-minimalist-warm-neutral-palette-text: 74, 68, 62; /* Soft Dark Brown */
 
-  --fl-minimalist-warm-neutral-text: rgba(74, 68, 62, 1); /* Soft Dark Brown */
-  --fl-minimalist-warm-neutral-muted: rgba(
-    163,
-    157,
-    144,
-    1
-  ); /* Muted Warm Gray */
-
-  --fl-minimalist-warm-neutral-border: rgba(
-    217,
-    210,
-    198,
-    1
-  ); /* Light Warm Border */
+  --fl-minimalist-warm-neutral-palette-muted:
+    163, 157, 144; /* Muted Warm Gray */
+  --fl-minimalist-warm-neutral-palette-border:
+    217, 210, 198; /* Light Warm Border */
 
   /* Minimalist - High-Contrast Minimal (Bold simplicity) */
-  --fl-minimalist-high-contrast-primary: rgba(
-    255,
-    255,
-    255,
-    1
-  ); /* Pure White */
-  --fl-minimalist-high-contrast-secondary: rgba(0, 0, 0, 1); /* Pure Black */
-  --fl-minimalist-high-contrast-accent: rgba(
-    10,
-    61,
-    98,
-    1
-  ); /* Deep Navy Accent */
-  --fl-minimalist-high-contrast-text: rgba(26, 26, 26, 1); /* Near Black */
-  --fl-minimalist-high-contrast-muted: rgba(102, 102, 102, 1); /* Medium Gray */
-  --fl-minimalist-high-contrast-border: rgba(
-    51,
-    51,
-    51,
-    1
-  ); /* Dark Gray Border */
+  --fl-minimalist-high-contrast-palette-primary: 255, 255, 255; /* Pure White */
+  --fl-minimalist-high-contrast-palette-secondary: 0, 0, 0; /* Pure Black */
+  --fl-minimalist-high-contrast-palette-accent:
+    10, 61, 98; /* Deep Navy Accent */
+  --fl-minimalist-high-contrast-palette-text: 26, 26, 26; /* Near Black */
+  --fl-minimalist-high-contrast-palette-muted: 102, 102, 102; /* Medium Gray */
+  --fl-minimalist-high-contrast-palette-border:
+    51, 51, 51; /* Dark Gray Border */
 
   /* Typography */
   --fl-minimalist-font-system:
@@ -125,6 +125,7 @@
     monospace;
 
   /* Spacing System (Apple-inspired) */
+
   --fl-minimalist-space-xs: 0.25rem; /* 4px */
   --fl-minimalist-space-sm: 0.5rem; /* 8px */
   --fl-minimalist-space-md: 1rem; /* 16px */
@@ -136,14 +137,15 @@
   /* Border Radius */
   --fl-minimalist-radius-sm: 0.375rem; /* 6px */
   --fl-minimalist-radius-md: 0.5rem; /* 8px */
-
   --fl-minimalist-radius-lg: 0.75rem; /* 12px */
   --fl-minimalist-radius-xl: 1rem; /* 16px */
 
   /* Shadows (Subtle, Apple-like) */
+
   --fl-minimalist-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --fl-minimalist-shadow-md:
     0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
   --fl-minimalist-shadow-lg:
     0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --fl-minimalist-shadow-xl:
@@ -152,57 +154,117 @@
   /* Transitions */
   --fl-minimalist-transition-fast: 150ms ease-in-out;
   --fl-minimalist-transition-normal: 300ms ease-in-out;
+
   --fl-minimalist-transition-slow: 500ms ease-in-out;
 }
 
 /* ==========================================================================
-   BASE STYLES
+   SEMANTIC COLOR MAPPING (Driven by current palette choice)
    ========================================================================== */
-
 .fl-minimalist {
-  font-family: var(--fl-minimalist-font-system);
+  /* Default Minimalist palette mapping */
+  --fl-color-primary-rgb: var(--fl-minimalist-palette-primary);
+  --fl-color-secondary-rgb: var(--fl-minimalist-palette-secondary);
+  --fl-color-accent-rgb: var(--fl-minimalist-palette-accent);
+  --fl-color-text-rgb: var(--fl-minimalist-palette-text);
+  --fl-color-muted-rgb: var(--fl-minimalist-palette-muted);
+  --fl-color-border-rgb: var(--fl-minimalist-palette-border);
 
-  background-color: var(--fl-minimalist-primary);
-  color: var(--fl-minimalist-text);
+  /* Semantic variables for direct use in components */
+  --fl-bg-primary: rgba(var(--fl-color-primary-rgb), 1);
+  --fl-bg-secondary: rgba(var(--fl-color-secondary-rgb), 1);
+  --fl-text-color: rgba(var(--fl-color-text-rgb), 1);
+  --fl-text-muted: rgba(var(--fl-color-muted-rgb), 1);
+  --fl-border-color: rgba(var(--fl-color-border-rgb), 1);
+  --fl-accent-color: rgba(var(--fl-color-accent-rgb), 1);
+
+  font-family: var(--fl-minimalist-font-system);
+  background-color: var(--fl-bg-primary); /* Use semantic variable */
+  color: var(--fl-text-color); /* Use semantic variable */
 
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   BUTTONS - MINIMALIST
+   PALETTE VARIANT CLASSES (Redefine semantic variables based on desired palette)
+   ========================================================================== */
+
+/* Cool Monochromatic Variant */
+.fl-minimalist--mono-cool {
+  --fl-color-primary-rgb: var(--fl-minimalist-mono-cool-palette-primary);
+  --fl-color-secondary-rgb: var(--fl-minimalist-mono-cool-palette-secondary);
+  --fl-color-accent-rgb: var(--fl-minimalist-mono-cool-palette-accent);
+  --fl-color-text-rgb: var(--fl-minimalist-mono-cool-palette-text);
+  --fl-color-muted-rgb: var(--fl-minimalist-mono-cool-palette-muted);
+  --fl-color-border-rgb: var(--fl-minimalist-mono-cool-palette-border);
+}
+
+/* Warm Neutral Variant */
+.fl-minimalist--warm-neutral {
+  --fl-color-primary-rgb: var(--fl-minimalist-warm-neutral-palette-primary);
+  --fl-color-secondary-rgb: var(--fl-minimalist-warm-neutral-palette-secondary);
+  --fl-color-accent-rgb: var(--fl-minimalist-warm-neutral-palette-accent);
+  --fl-color-text-rgb: var(--fl-minimalist-warm-neutral-palette-text);
+  --fl-color-muted-rgb: var(--fl-minimalist-warm-neutral-palette-muted);
+  --fl-color-border-rgb: var(--fl-minimalist-warm-neutral-palette-border);
+}
+
+/* High Contrast Variant */
+.fl-minimalist--high-contrast {
+  --fl-color-primary-rgb: var(--fl-minimalist-high-contrast-palette-primary);
+  --fl-color-secondary-rgb: var(
+    --fl-minimalist-high-contrast-palette-secondary
+  );
+
+  --fl-color-accent-rgb: var(--fl-minimalist-high-contrast-palette-accent);
+  --fl-color-text-rgb: var(--fl-minimalist-high-contrast-palette-text);
+  --fl-color-muted-rgb: var(--fl-minimalist-high-contrast-palette-muted);
+  --fl-color-border-rgb: var(--fl-minimalist-high-contrast-palette-border);
+}
+
+/* ==========================================================================
+   BASE STYLES (NOW USE SEMANTIC VARIABLES)
+
+   ========================================================================== */
+
+/* (No change needed here as .fl-minimalist already uses semantic vars) */
+
+/* ==========================================================================
+   COMPONENTS (NOW USE SEMANTIC VARIABLES)
    ========================================================================== */
 
 .fl-btn--minimalist {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   gap: var(--fl-minimalist-space-sm);
   padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-lg);
-  border: 1px solid var(--fl-minimalist-border);
+  border: 1px solid var(--fl-border-color); /* Use semantic variable */
   border-radius: var(--fl-minimalist-radius-md);
-  background-color: var(--fl-minimalist-primary);
-  color: var(--fl-minimalist-text);
+
+  background-color: var(--fl-bg-primary); /* Use semantic variable */
+  color: var(--fl-text-color); /* Use semantic variable */
   font-family: var(--fl-minimalist-font-system);
   font-size: 0.875rem;
   font-weight: 500;
+
   text-decoration: none;
   cursor: pointer;
-
   transition: all var(--fl-minimalist-transition-fast);
   box-shadow: var(--fl-minimalist-shadow-sm);
 }
 
 .fl-btn--minimalist:hover {
-  background-color: var(--fl-minimalist-secondary);
-  border-color: var(--fl-minimalist-muted);
+  background-color: var(--fl-bg-secondary); /* Use semantic variable */
+  border-color: var(--fl-text-muted); /* Use semantic variable */
   box-shadow: var(--fl-minimalist-shadow-md);
   transform: translateY(-1px);
 }
 
 .fl-btn--minimalist:focus {
-  outline: 2px solid var(--fl-minimalist-accent);
+  outline: 2px solid var(--fl-accent-color); /* Use semantic variable */
   outline-offset: 2px;
 }
 
@@ -213,17 +275,18 @@
 
 /* Primary Button Variant */
 .fl-btn--minimalist.fl-btn--primary {
-  background-color: var(--fl-minimalist-accent);
-  border-color: var(--fl-minimalist-accent);
-  color: var(--fl-minimalist-primary);
+  background-color: var(--fl-accent-color); /* Use semantic variable */
+  border-color: var(--fl-accent-color); /* Use semantic variable */
+  color: var(--fl-bg-primary); /* Use semantic variable */
 }
 
 .fl-btn--minimalist.fl-btn--primary:hover {
-  background-color: rgba(0, 122, 255, 0.9);
-  border-color: rgba(0, 122, 255, 0.9);
+  /* For precise opacity changes, consider using RGB values here */
+  background-color: rgba(var(--fl-color-accent-rgb), 0.9);
+  border-color: rgba(var(--fl-color-accent-rgb), 0.9);
 }
 
-/* Button Sizes */
+/* Button Sizes - NO CHANGE */
 .fl-btn--minimalist.fl-btn--sm {
   padding: var(--fl-minimalist-space-xs) var(--fl-minimalist-space-md);
   font-size: 0.75rem;
@@ -235,13 +298,12 @@
 }
 
 /* ==========================================================================
-
-   CARDS - MINIMALIST
+   CARDS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
    ========================================================================== */
 
 .fl-card--minimalist {
-  background-color: var(--fl-minimalist-primary);
-  border: 1px solid var(--fl-minimalist-border);
+  background-color: var(--fl-bg-primary); /* Use semantic variable */
+  border: 1px solid var(--fl-border-color); /* Use semantic variable */
   border-radius: var(--fl-minimalist-radius-lg);
   box-shadow: var(--fl-minimalist-shadow-sm);
   transition: all var(--fl-minimalist-transition-normal);
@@ -257,15 +319,14 @@
 .fl-card__header--minimalist {
   padding: var(--fl-minimalist-space-lg);
 
-  border-bottom: 1px solid var(--fl-minimalist-border);
+  border-bottom: 1px solid var(--fl-border-color); /* Use semantic variable */
 }
 
 .fl-card__title--minimalist {
   margin: 0;
-
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
 }
 
 .fl-card__content--minimalist {
@@ -274,20 +335,18 @@
 
 .fl-card__text--minimalist {
   margin: 0;
-
-  color: var(--fl-minimalist-muted);
+  color: var(--fl-text-muted); /* Use semantic variable */
   line-height: 1.5;
 }
 
 .fl-card__footer--minimalist {
   padding: var(--fl-minimalist-space-lg);
-  border-top: 1px solid var(--fl-minimalist-border);
-  background-color: var(--fl-minimalist-secondary);
+  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
+  background-color: var(--fl-bg-secondary); /* Use semantic variable */
 }
 
 /* ==========================================================================
-
-   FORMS - MINIMALIST
+   FORMS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
    ========================================================================== */
 
 .fl-form--minimalist {
@@ -301,20 +360,22 @@
 .fl-form__label--minimalist {
   display: block;
   margin-bottom: var(--fl-minimalist-space-sm);
+
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
 }
 
 .fl-form__input--minimalist,
 .fl-form__textarea--minimalist,
 .fl-form__select--minimalist {
   width: 100%;
+
   padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-md);
-  border: 1px solid var(--fl-minimalist-border);
+  border: 1px solid var(--fl-border-color); /* Use semantic variable */
   border-radius: var(--fl-minimalist-radius-md);
-  background-color: var(--fl-minimalist-primary);
-  color: var(--fl-minimalist-text);
+  background-color: var(--fl-bg-primary); /* Use semantic variable */
+  color: var(--fl-text-color); /* Use semantic variable */
   font-family: var(--fl-minimalist-font-system);
   font-size: 0.875rem;
   transition: all var(--fl-minimalist-transition-fast);
@@ -324,18 +385,17 @@
 .fl-form__textarea--minimalist:focus,
 .fl-form__select--minimalist:focus {
   outline: none;
-  border-color: var(--fl-minimalist-accent);
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  border-color: var(--fl-accent-color); /* Use semantic variable */
+  box-shadow: 0 0 0 3px rgba(var(--fl-color-accent-rgb), 0.1); /* Use RGB value */
 }
 
 .fl-form__textarea--minimalist {
   resize: vertical;
-
   min-height: 100px;
 }
 
 /* ==========================================================================
-   NAVIGATION - MINIMALIST
+   NAVIGATION - MINIMALIST (NOW USE SEMANTIC VARIABLES)
    ========================================================================== */
 
 .fl-nav--minimalist {
@@ -343,14 +403,15 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--fl-minimalist-space-md) 0;
-  background-color: var(--fl-minimalist-primary);
-  border-bottom: 1px solid var(--fl-minimalist-border);
+  background-color: var(--fl-bg-primary); /* Use semantic variable */
+
+  border-bottom: 1px solid var(--fl-border-color); /* Use semantic variable */
 }
 
 .fl-nav__brand--minimalist {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
   text-decoration: none;
 }
 
@@ -364,7 +425,7 @@
 }
 
 .fl-nav__link--minimalist {
-  color: var(--fl-minimalist-muted);
+  color: var(--fl-text-muted); /* Use semantic variable */
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
@@ -373,33 +434,32 @@
 
 .fl-nav__link--minimalist:hover,
 .fl-nav__link--minimalist.fl-nav__link--active {
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
 }
 
 /* ==========================================================================
-   HERO SECTIONS - MINIMALIST
+   HERO SECTIONS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
 
    ========================================================================== */
 
 .fl-hero--minimalist {
   padding: var(--fl-minimalist-space-3xl) 0;
   text-align: center;
-  background-color: var(--fl-minimalist-secondary);
+  background-color: var(--fl-bg-secondary); /* Use semantic variable */
 }
 
 .fl-hero__title--minimalist {
   margin: 0 0 var(--fl-minimalist-space-lg) 0;
   font-size: clamp(2rem, 5vw, 3.5rem);
-
   font-weight: 700;
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
   line-height: 1.2;
 }
 
 .fl-hero__subtitle--minimalist {
   margin: 0 0 var(--fl-minimalist-space-xl) 0;
   font-size: 1.125rem;
-  color: var(--fl-minimalist-muted);
+  color: var(--fl-text-muted); /* Use semantic variable */
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -414,18 +474,17 @@
 }
 
 /* ==========================================================================
-   FOOTER - MINIMALIST
+   FOOTER - MINIMALIST (NOW USE SEMANTIC VARIABLES)
    ========================================================================== */
 
 .fl-footer--minimalist {
   padding: var(--fl-minimalist-space-2xl) 0;
-  background-color: var(--fl-minimalist-secondary);
-  border-top: 1px solid var(--fl-minimalist-border);
+  background-color: var(--fl-bg-secondary); /* Use semantic variable */
+  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
 }
 
 .fl-footer__content--minimalist {
   display: grid;
-
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--fl-minimalist-space-xl);
   margin-bottom: var(--fl-minimalist-space-xl);
@@ -439,24 +498,23 @@
   margin: 0 0 var(--fl-minimalist-space-md) 0;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
 }
 
 .fl-footer__link--minimalist {
-  color: var(--fl-minimalist-muted);
+  color: var(--fl-text-muted); /* Use semantic variable */
   text-decoration: none;
   font-size: 0.875rem;
-
   transition: color var(--fl-minimalist-transition-fast);
 }
 
 .fl-footer__link--minimalist:hover {
-  color: var(--fl-minimalist-text);
+  color: var(--fl-text-color); /* Use semantic variable */
 }
 
 .fl-footer__bottom--minimalist {
   padding-top: var(--fl-minimalist-space-lg);
-  border-top: 1px solid var(--fl-minimalist-border);
+  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
   text-align: center;
 }
 
@@ -464,7 +522,7 @@
   margin: 0;
 
   font-size: 0.75rem;
-  color: var(--fl-minimalist-muted);
+  color: var(--fl-text-muted); /* Use semantic variable */
 }
 
 /* ==========================================================================
@@ -492,42 +550,4 @@
   .fl-footer__content--minimalist {
     grid-template-columns: 1fr;
   }
-}
-
-/* ==========================================================================
-
-   PALETTE VARIANT CLASSES
-   ========================================================================== */
-
-/* Cool Monochromatic Variant */
-.fl-minimalist--mono-cool {
-  --fl-minimalist-primary: var(--fl-minimalist-mono-cool-primary);
-
-  --fl-minimalist-secondary: var(--fl-minimalist-mono-cool-secondary);
-  --fl-minimalist-accent: var(--fl-minimalist-mono-cool-accent);
-  --fl-minimalist-text: var(--fl-minimalist-mono-cool-text);
-  --fl-minimalist-muted: var(--fl-minimalist-mono-cool-muted);
-
-  --fl-minimalist-border: var(--fl-minimalist-mono-cool-border);
-}
-
-/* Warm Neutral Variant */
-
-.fl-minimalist--warm-neutral {
-  --fl-minimalist-primary: var(--fl-minimalist-warm-neutral-primary);
-  --fl-minimalist-secondary: var(--fl-minimalist-warm-neutral-secondary);
-  --fl-minimalist-accent: var(--fl-minimalist-warm-neutral-accent);
-  --fl-minimalist-text: var(--fl-minimalist-warm-neutral-text);
-  --fl-minimalist-muted: var(--fl-minimalist-warm-neutral-muted);
-  --fl-minimalist-border: var(--fl-minimalist-warm-neutral-border);
-}
-
-/* High Contrast Variant */
-.fl-minimalist--high-contrast {
-  --fl-minimalist-primary: var(--fl-minimalist-high-contrast-primary);
-  --fl-minimalist-secondary: var(--fl-minimalist-high-contrast-secondary);
-  --fl-minimalist-accent: var(--fl-minimalist-high-contrast-accent);
-  --fl-minimalist-text: var(--fl-minimalist-high-contrast-text);
-  --fl-minimalist-muted: var(--fl-minimalist-high-contrast-muted);
-  --fl-minimalist-border: var(--fl-minimalist-high-contrast-border);
 }
