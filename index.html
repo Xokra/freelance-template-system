@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimalist Awwwards Template</title>
+
+    <!-- Google Fonts - Inter (Recommended by README) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Link to your minimalist.css file -->
+    <!-- IMPORTANT: Ensure this path is correct relative to your HTML file -->
+
+    <link rel="stylesheet" href="./templates/css/frameworks/minimalist.css" />
+
+    <!-- Basic inline styles for parallax background images for demonstration -->
+
+    <style>
+      /* This is a simple way to add background images for the parallax demo.
+
+             In a real project, you might manage these via CSS classes or data attributes
+
+             or more complex JS for dynamic backgrounds. */
+      .hero-background-image {
+        background-image: url("https://placehold.co/1920x1080/E0E0E0/333333?text=Hero+Background");
+        background-size: cover;
+        background-position: center;
+        /* Important for parallax to work with background-image */
+        background-attachment: scroll; /* JS will change transform, not fixed attachment */
+
+        position: absolute; /* Position relative to .fl-hero-section */
+        top: 0;
+
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Keep it behind content */
+      }
+
+      .section-background-image {
+        background-image: url("https://placehold.co/1920x1080/F0F0F0/555555?text=Section+Background");
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      /* Ensure hero section has relative positioning for absolute children */
+      .fl-hero-section {
+        position: relative;
+
+        overflow: hidden; /* Crucial to clip parallax elements that move outside bounds */
+        min-height: 80vh; /* Example height for hero */
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      /* Small adjustment for card media to ensure background for text */
+      .fl-card__media {
+        position: relative;
+        background-color: hsl(
+          var(--fl-color-surface)
+        ); /* Fallback/base color */
+      }
+      .fl-card__img {
+        z-index: 1; /* Ensure image is above any background effects */
+      }
+
+      /* --- NEW: Fixed Header Styles --- */
+      .fl-fixed-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; /* Ensure it stays on top of other content */
+        /* Add a subtle shadow for depth when fixed */
+        box-shadow: var(--fl-shadow-md);
+      }
+
+      /* --- NEW: Body Padding to Compensate for Fixed Header --- */
+
+      body {
+        /* This padding should be roughly the height of your header to prevent content
+           from being hidden underneath it. Adjust as needed. */
+
+        padding-top: 5rem; /* Example: Adjust based on your header's actual height */
+      }
+    </style>
+  </head>
+  <!--
+    The data-theme and data-palette attributes on the body are crucial.
+
+    Your animations.js will read and update these based on user preferences
+
+    or system settings, and your CSS will react to them.
+-->
+  <body data-theme="light" data-palette="default">
+    <!-- Header Section -->
+    <header class="fl-section fl-bg-background fl-fixed-header">
+      <div
+        class="fl-container fl-d-flex fl-items-center fl-justify-center fl-gap-lg"
+      >
+        <!-- Site Logo/Title -->
+        <a href="#" class="fl-text-primary fl-text-2xl fl-link-underline">
+          <strong>YourBrand</strong>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav>
+          <ul class="fl-d-flex fl-gap-md">
+            <li><a href="#hero" class="fl-link-underline">Home</a></li>
+            <li><a href="#features" class="fl-link-underline">Features</a></li>
+            <li>
+              <a href="#portfolio" class="fl-link-underline">Portfolio</a>
+            </li>
+            <li><a href="#contact" class="fl-link-underline">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- Theme and Palette Toggles -->
+        <div class="fl-d-flex fl-gap-sm">
+          <!-- Button to toggle between Light and Dark themes -->
+          <button
+            id="theme-toggle"
+            class="fl-btn fl-btn--outline fl-btn--sm"
+            aria-label="Toggle light/dark theme"
+          >
+            Theme
+          </button>
+          <!-- Buttons to switch between different color palettes -->
+          <div class="fl-d-flex fl-gap-xs">
+            <button
+              class="fl-btn fl-btn--primary fl-btn--sm"
+              onclick="setPalette('default')"
+              aria-label="Set Default Palette"
+            >
+              D
+            </button>
+
+            <button
+              class="fl-btn fl-btn--primary fl-btn--sm"
+              onclick="setPalette('mono-cool')"
+              aria-label="Set Monochromatic Cool Palette"
+            >
+              M
+            </button>
+            <button
+              class="fl-btn fl-btn--primary fl-btn--sm"
+              onclick="setPalette('warm-neutral')"
+              aria-label="Set Warm Neutral Palette"
+            >
+              W
+            </button>
+            <button
+              class="fl-btn fl-btn--primary fl-btn--sm"
+              onclick="setPalette('high-contrast')"
+              aria-label="Set High Contrast Palette"
+            >
+              H
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Hero Section with Parallax and Animations -->
+
+      <section id="hero" class="fl-hero-section fl-bg-background">
+        <!-- Parallax Background Element -->
+
+        <div class="hero-background-image" data-parallax-speed="0.2"></div>
+
+        <div
+          class="fl-container fl-text-center fl-animate-on-scroll"
+          data-animate-on-scroll="true"
+        >
+          <h1 class="fl-text-gradient fl-font-weight-bold fl-font-size-6xl">
+            Crafting Awwwards-Level Digital Experiences
+          </h1>
+
+          <p class="fl-text-xl fl-text-muted fl-mt-md">
+            Unparalleled premium frontend positions for the modern web.
+          </p>
+
+          <div class="fl-d-flex fl-gap-md fl-justify-center fl-mt-lg">
+            <button class="fl-btn fl-btn--primary fl-interactive-border-pulse">
+              Get Started
+            </button>
+            <button class="fl-btn fl-btn--outline fl-interactive-border-pulse">
+              Learn More
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section with Cards and Animations -->
+      <section id="features" class="fl-section fl-bg-surface">
+        <!-- Parallax Background Element for this section -->
+        <div
+          class="section-background-image"
+          data-parallax-speed="0.1"
+          style="z-index: -2"
+        ></div>
+
+        <div class="fl-container">
+          <h2
+            class="fl-text-center fl-mb-2xl fl-animate-on-scroll"
+            data-animate-on-scroll="true"
+          >
+            Our Core Strengths
+          </h2>
+          <div class="fl-grid-cols-3 fl-gap-2xl">
+            <!-- Feature Card 1 -->
+            <article
+              class="fl-card fl-interactive-border-pulse fl-animate-on-scroll"
+              data-animate-on-scroll="true"
+            >
+              <div class="fl-card__media fl-aspect-16x9">
+                <img
+                  src="https://placehold.co/600x400/D0D0D0/333333?text=Design+Excellence"
+                  alt="Design Excellence"
+                  class="fl-card__img"
+                />
+              </div>
+              <div class="fl-card__content">
+                <h3 class="fl-card__title">Pixel-Perfect Design</h3>
+                <p class="fl-card__text">
+                  Meticulous attention to detail ensures every element is
+                  flawlessly rendered.
+                </p>
+              </div>
+              <footer class="fl-card__footer">
+                <a href="#" class="fl-link-underline">Read More</a>
+              </footer>
+            </article>
+
+            <!-- Feature Card 2 -->
+            <article
+              class="fl-card fl-interactive-border-pulse fl-animate-on-scroll"
+              data-animate-on-scroll="true"
+              style="transition-delay: 0.1s"
+            >
+              <div class="fl-card__media fl-aspect-16x9">
+                <img
+                  src="https://placehold.co/600x400/C0C0C0/444444?text=Performance+Optimized"
+                  alt="Performance Optimized"
+                  class="fl-card__img"
+                />
+              </div>
+
+              <div class="fl-card__content">
+                <h3 class="fl-card__title">Performance-Driven</h3>
+                <p class="fl-card__text">
+                  Optimized for speed and smooth interactions, ensuring a
+                  delightful user experience.
+                </p>
+              </div>
+              <footer class="fl-card__footer">
+                <a href="#" class="fl-link-underline">Read More</a>
+              </footer>
+            </article>
+
+            <!-- Feature Card 3 -->
+            <article
+              class="fl-card fl-interactive-border-pulse fl-animate-on-scroll"
+              data-animate-on-scroll="true"
+              style="transition-delay: 0.2s"
+            >
+              <div class="fl-card__media fl-aspect-16x9">
+                <img
+                  src="https://placehold.co/600x400/B0B0B0/555555?text=Accessibility"
+                  alt="Accessibility"
+                  class="fl-card__img"
+                />
+              </div>
+              <div class="fl-card__content">
+                <h3 class="fl-card__title">Universal Accessibility</h3>
+                <p class="fl-card__text">
+                  WCAG 2.1 AA compliance for an inclusive web experience for all
+                  users.
+                </p>
+              </div>
+
+              <footer class="fl-card__footer">
+                <a href="#" class="fl-link-underline">Read More</a>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Portfolio Section (Placeholder) -->
+      <section id="portfolio" class="fl-section fl-bg-background">
+        <div
+          class="fl-container fl-text-center fl-animate-on-scroll"
+          data-animate-on-scroll="true"
+        >
+          <h2 class="fl-mb-lg">Our Latest Works</h2>
+          <p class="fl-text-muted fl-mb-2xl">
+            Explore a curated selection of our Awwwards-contending projects.
+          </p>
+          <!-- You would add a gallery or grid of portfolio items here -->
+          <button class="fl-btn fl-btn--outline fl-interactive-border-pulse">
+            View All Projects
+          </button>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="fl-section fl-bg-surface">
+        <div
+          class="fl-container fl-text-center fl-animate-on-scroll"
+          data-animate-on-scroll="true"
+        >
+          <h2 class="fl-mb-lg">Let's Build Something Amazing</h2>
+          <p class="fl-text-muted fl-mb-2xl">
+            Ready to elevate your online presence? Get in touch today.
+          </p>
+          <button class="fl-btn fl-btn--primary fl-interactive-border-pulse">
+            Contact Us
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="fl-section fl-bg-background fl-text-center fl-text-muted">
+      <div class="fl-container">
+        <p>&copy; 2025 YourBrand. All rights reserved.</p>
+        <p class="fl-mt-sm">
+          <a href="#" class="fl-link-underline">Privacy Policy</a> |
+          <a href="#" class="fl-link-underline">Terms of Service</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Link to your animations.js file -->
+
+    <!-- Place at the end of the body for better performance -->
+    <!-- IMPORTANT: Ensure this path is correct relative to your HTML file -->
+    <script src="./templates/js/animations.js"></script>
+
+    <!--
+        The inline script below contained duplicate function definitions that conflicted
+        with animations.js. These definitions have been removed to resolve the errors.
+        The functionality is now solely handled by animations.js.
+    -->
+  </body>
+</html>

@@ -1,553 +1,1353 @@
 /*!
  * Freelance Template System - Minimalist Framework
- * Tier: Budget ($300-500 | Rp 1,000,000 - Rp 2,000,000)
- * Target: Tech startups, consultants, small businesses
+ * Tier: Awwwards-level aspirations
+ * Target: Tech startups, consultants, small businesses, high-end portfolios
+ * Value: Clean, professional, Apple-inspired design with advanced polish
 
- * Value: Clean, professional, Apple-inspired design
- * Build Time: 8-12 hours
+ *
+ * Build Time: Extended for meticulous detail and advanced features
+ *
+ * This CSS file is designed to be globally applicable to any minimalist project,
+
+ * focusing on a robust design system, advanced typography, subtle interactions,
+ * and performance considerations.
  */
 
 /* ==========================================================================
-   CSS RESET / NORMALIZE
+
+
+   CSS Cascade Layers
+   Organizing CSS into layers helps manage specificity and prevent unintended
+   overrides, which is crucial for a robust design system.
    ========================================================================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+
+@layer reset, base, tokens, utilities, components, layouts, awwwards-specific, experimental;
+
+
+/* ==========================================================================
+   CSS RESET / NORMALIZE (A modern, opinionated reset)
+   ========================================================================== */
+@layer reset {
+  * {
+    box-sizing: border-box; /* Ensure consistent box model */
+    margin: 0; /* Reset default margins */
+    padding: 0; /* Reset default paddings */
+  }
+
+  /* Inherit box-sizing for all elements, including pseudo-elements */
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+
+  html {
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling on orientation change */
+
+    /* Only apply smooth scroll if user doesn't prefer reduced motion */
+    scroll-behavior: smooth;
+    @media (prefers-reduced-motion: reduce) {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    text-rendering: optimizeLegibility; /* Optimize text rendering for legibility */
+
+
+    -webkit-font-smoothing: antialiased; /* Smoother font rendering on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Smoother font rendering on Firefox */
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1; /* Enable kerning and ligatures for premium typography */
+  }
+
+  /* Remove default list styles */
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  /* Remove text decoration from links and apply default color */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Make images responsive by default */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Remove default button styles */
+  button,
+  input,
+  select,
+  textarea {
+    background: none;
+    border: none;
+
+    font: inherit;
+
+    color: inherit;
+
+    cursor: pointer;
+
+    outline: none; /* Manage focus states with :focus-visible */
+
+  }
+
+  /* Allow textareas to resize vertically only */
+
+  textarea {
+    resize: vertical;
+  }
+
+  /* Inherit font styles for form elements */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  /* Ensure sufficient contrast for all elements (requires careful palette selection) */
+  /* This is more about choosing the right RGB values for --fl-color-*-rgb
+
+       rather than a specific CSS rule here. Developers must verify contrast. */
+
 }
 
-html {
-  -webkit-text-size-adjust: 100%; /* Prevent font scaling on orientation change */
-  scroll-behavior: smooth; /* Smooth scrolling */
-}
 
-body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* ==========================================================================
+   CSS TOKENS (Design System Variables)
+   Organized for maintainability and dynamic theming.
+   ========================================================================== */
+@layer tokens {
+  :root {
 
-img,
-video,
-svg,
-canvas,
-audio,
-iframe,
-embed,
-object {
-  display: block;
+    /* --- Universal Gray Scale (HSL lightness values) --- */
+    --fl-gray-100-l: 95%; /* Lightest gray */
+    --fl-gray-200-l: 90%;
+    --fl-gray-300-l: 80%;
+    --fl-gray-400-l: 70%;
+    --fl-gray-500-l: 50%; /* Medium gray */
 
-  max-width: 100%;
-  height: auto;
-}
+    --fl-gray-600-l: 40%;
+    --fl-gray-700-l: 30%;
+    --fl-gray-800-l: 20%;
+    --fl-gray-900-l: 10%; /* Darkest gray */
 
-input,
-button,
-textarea,
-select {
-  font: inherit; /* Inherit font from parent */
-}
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0;
+    /* Pure Black and White RGB values */
+    --fl-color-white-rgb: 255 255 255;
+    --fl-color-black-rgb: 0 0 0;
 
-  margin-bottom: 0;
-}
+    /* --- PALETTE DEFINITIONS (Hue, Saturation) --- */
 
-ul,
-ol {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    /* These define the base HSL components for each named palette. */
+
+    /* Minimalist Default Palette */
+
+    --fl-palette-default-primary-h: 210; /* Blue-ish */
+    --fl-palette-default-primary-s: 100%;
+    --fl-palette-default-accent-h: 30; /* Orange-ish */
+
+    --fl-palette-default-accent-s: 100%;
+    --fl-palette-default-text-h: 0;
+    --fl-palette-default-text-s: 0%; /* Grayscale for text */
+
+    /* Minimalist - Monochromatic Cool Palette */
+    --fl-palette-mono-cool-primary-h: 200; /* Cool Blue */
+
+
+    --fl-palette-mono-cool-primary-s: 50%;
+    --fl-palette-mono-cool-accent-h: 220; /* Muted Slate Blue */
+
+
+    --fl-palette-mono-cool-accent-s: 20%;
+    --fl-palette-mono-cool-text-h: 210;
+    --fl-palette-mono-cool-text-s: 20%; /* Slightly cool text */
+
+    /* Minimalist - Warm Neutrals Palette */
+    --fl-palette-warm-neutral-primary-h: 40; /* Warm Yellow/Orange */
+    --fl-palette-warm-neutral-primary-s: 20%;
+    --fl-palette-warm-neutral-accent-h: 80; /* Earthy Olive */
+    --fl-palette-warm-neutral-accent-s: 30%;
+
+    --fl-palette-warm-neutral-text-h: 30;
+    --fl-palette-warm-neutral-text-s: 10%; /* Slightly warm text */
+
+    /* Minimalist - High-Contrast Minimal Palette */
+    --fl-palette-high-contrast-primary-h: 0;
+    --fl-palette-high-contrast-primary-s: 0%; /* Grayscale */
+    --fl-palette-high-contrast-accent-h: 200; /* Deep Navy */
+    --fl-palette-high-contrast-accent-s: 80%;
+    --fl-palette-high-contrast-text-h: 0;
+
+    --fl-palette-high-contrast-text-s: 0%; /* Grayscale text */
+
+    /* --- SIMPLIFIED COLOR SYSTEM --- */
+
+
+    /* Typography Variables */
+    --fl-font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+    --fl-font-family-heading: "Inter", system-ui, -apple-system, sans-serif;
+
+    --fl-font-size-xs: 0.75rem;
+    --fl-font-size-sm: 0.875rem;
+    --fl-font-size-base: 1rem;
+    --fl-font-size-lg: 1.125rem;
+    --fl-font-size-xl: 1.25rem;
+
+    --fl-font-size-2xl: 1.5rem;
+    --fl-font-size-3xl: 1.875rem;
+
+    --fl-font-size-4xl: 2.25rem;
+    --fl-font-size-5xl: 3rem;
+    --fl-font-size-6xl: 3.75rem;
+    --fl-font-weight-light: 300;
+    --fl-font-weight-normal: 400;
+    --fl-font-weight-medium: 500;
+    --fl-font-weight-semibold: 600;
+
+    --fl-font-weight-bold: 700;
+    --fl-line-height-tight: 1.25;
+
+    --fl-line-height-normal: 1.5;
+    --fl-line-height-loose: 1.75;
+
+    /* Spacing Variables */
+    --fl-spacing-xs: 0.25rem;
+
+    --fl-spacing-sm: 0.5rem;
+
+    --fl-spacing-md: 1rem;
+
+    --fl-spacing-lg: 1.5rem;
+
+    --fl-spacing-xl: 2rem;
+    --fl-spacing-2xl: 3rem;
+    --fl-section-padding: 4rem;
+
+
+    /* Border Radius */
+    --fl-radius-sm: 0.25rem;
+    --fl-radius-md: 0.5rem;
+
+    --fl-radius-lg: 1rem;
+
+
+    /* Opacity */
+    --fl-opacity-xs: 0.05;
+    --fl-opacity-sm: 0.1;
+
+    --fl-opacity-md: 0.2;
+
+    /* Current palette values - these get updated by palette switching */
+    --fl-current-hue-primary: 210;
+    --fl-current-saturation-primary: 100%;
+    --fl-current-hue-accent: 30;
+
+
+    --fl-current-saturation-accent: 100%;
+    --fl-current-hue-text: 0;
+    --fl-current-saturation-text: 0%;
+
+    /* Active lightness values - these get updated by theme switching */
+    --fl-active-lightness-primary: 50%;
+    --fl-active-lightness-accent: 50%;
+    --fl-active-lightness-text: var(--fl-gray-900-l);
+    --fl-active-lightness-text-muted: var(--fl-gray-600-l);
+    --fl-active-lightness-background: var(--fl-gray-100-l);
+    --fl-active-lightness-surface: 100%;
+    --fl-active-lightness-border: var(--fl-gray-400-l);
+
+
+    /* Shadow color */
+    --fl-shadow-color-h: 0;
+    --fl-shadow-color-s: 0%;
+    --fl-shadow-color-l: 20%;
+
+    /* Base color definitions using the current values */
+    --fl-color-primary: hsl(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+    --fl-color-accent: hsl(
+      var(--fl-current-hue-accent),
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+
+
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text-muted)
+    );
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+
+      var(--fl-active-lightness-background)
+
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+
+    /* RGB values for gradients and special effects */
+    --fl-color-white-rgb: 255, 255, 255;
+
+    --fl-color-black-rgb: 0, 0, 0;
+
+    --fl-shadow-sm: 0 1px 2px
+
+      hsla(
+        var(--fl-shadow-color-h),
+        var(--fl-shadow-color-s),
+        var(--fl-shadow-color-l),
+        0.05
+
+      );
+    --fl-shadow-md:
+      0 4px 6px
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.1
+        ),
+      0 1px 3px
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.05
+
+        );
+
+    --fl-shadow-lg:
+
+      0 10px 15px
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.1
+        ),
+      0 4px 6px
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.05
+        );
+    --fl-shadow-xl:
+      0 20px 25px
+
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.15
+        ),
+
+      0 8px 10px
+        hsla(
+          var(--fl-shadow-color-h),
+          var(--fl-shadow-color-s),
+          var(--fl-shadow-color-l),
+          0.06
+        );
+    --fl-shadow-2xl: 0 25px 50px
+      hsla(
+        var(--fl-shadow-color-h),
+        var(--fl-shadow-color-s),
+        var(--fl-shadow-color-l),
+
+        0.2
+      );
+    --fl-shadow-inset: inset 0 2px 4px
+      hsla(
+        var(--fl-shadow-color-h),
+        var(--fl-shadow-color-s),
+        var(--fl-shadow-color-l),
+        0.06
+      );
+
+
+    /* --- Transitions --- */
+    --fl-transition-fast: 0.15s ease-out;
+    --fl-transition-normal: 0.3s ease-in-out;
+    --fl-transition-slow: 0.5s ease-in-out;
+    --fl-transition-bezier: cubic-bezier(
+      0.2,
+      0.8,
+      0.2,
+
+      1
+    ); /* Awwwards-level smooth easing */
+
+    /* --- Borders --- */
+    --fl-border-thin: 1px solid;
+
+    --fl-border-normal: 2px solid;
+
+    /* --- Z-Index --- */
+    --fl-z-base: 1;
+
+    --fl-z-dropdown: 10;
+    --fl-z-sticky: 100;
+    --fl-z-overlay: 1000;
+    --fl-z-modal: 2000;
+
+    /* --- Breakpoints (Mobile-first approach) --- */
+
+    --fl-breakpoint-sm: 640px; /* For small tablets, large phones */
+    --fl-breakpoint-md: 768px; /* For tablets */
+    --fl-breakpoint-lg: 1024px; /* For small laptops, desktops */
+    --fl-breakpoint-xl: 1280px; /* For large desktops */
+
+    --fl-breakpoint-2xl: 1536px; /* For extra large desktops */
+
+    /* --- Global Effects --- */
+
+    /* Example noise texture for subtle background depth */
+
+    --fl-noise-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" result="noise"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(#n)" opacity="0.03"/></svg>');
+
+
+    /* Blur values for backdrop-filter */
+    --fl-blur-sm: 5px;
+    --fl-blur-md: 10px;
+
+    --fl-blur-lg: 20px;
+  }
+
+  /* --- PALETTE SWITCHING --- */
+  body[data-palette="default"] {
+    --fl-current-hue-primary: 210;
+    --fl-current-saturation-primary: 100%;
+
+    --fl-current-hue-accent: 30;
+    --fl-current-saturation-accent: 100%;
+
+    --fl-current-hue-text: 0;
+    --fl-current-saturation-text: 0%;
+
+
+    /* Redefine computed colors based on this palette */
+    --fl-color-primary: hsl(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+
+    );
+    --fl-color-accent: hsl(
+      var(--fl-current-hue-accent),
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text-muted)
+    );
+    --fl-color-background: hsl(
+
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+    );
+
+    --fl-color-border: hsl(
+
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+  }
+
+
+  body[data-palette="mono-cool"] {
+    --fl-current-hue-primary: 200;
+    --fl-current-saturation-primary: 50%;
+    --fl-current-hue-accent: 220;
+    --fl-current-saturation-accent: 20%;
+    --fl-current-hue-text: 210;
+    --fl-current-saturation-text: 20%;
+
+    /* Redefine computed colors based on this palette */
+
+    --fl-color-primary: hsl(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+    --fl-color-accent: hsl(
+      var(--fl-current-hue-accent),
+      var(--fl-current-saturation-accent),
+
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text-muted)
+    );
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+
+      var(--fl-active-lightness-surface)
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+
+  }
+
+  body[data-palette="warm-neutral"] {
+    --fl-current-hue-primary: 40;
+    --fl-current-saturation-primary: 60%;
+
+    --fl-current-hue-accent: 80;
+    --fl-current-saturation-accent: 40%;
+    --fl-current-hue-text: 30;
+    --fl-current-saturation-text: 10%;
+
+    /* Redefine computed colors based on this palette */
+    --fl-color-primary: hsl(
+
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+
+    --fl-color-accent: hsl(
+
+      var(--fl-current-hue-accent),
+
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+
+      var(--fl-active-lightness-text-muted)
+
+    );
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+  }
+
+  body[data-palette="high-contrast"] {
+    --fl-current-hue-primary: 0;
+    --fl-current-saturation-primary: 0%;
+    --fl-current-hue-accent: 200;
+    --fl-current-saturation-accent: 80%;
+
+
+    --fl-current-hue-text: 0;
+    --fl-current-saturation-text: 0%;
+
+    /* Redefine computed colors based on this palette */
+    --fl-color-primary: hsl(
+
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+
+    --fl-color-accent: hsl(
+
+      var(--fl-current-hue-accent),
+
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+
+      var(--fl-active-lightness-text-muted)
+
+    );
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+  }
+
+  /* --- THEME SWITCHING (Dark/Light Mode) --- */
+  body[data-theme="light"] {
+    --fl-active-lightness-primary: 50%;
+
+    --fl-active-lightness-accent: 50%;
+    --fl-active-lightness-text: var(--fl-gray-900-l);
+    --fl-active-lightness-text-muted: var(--fl-gray-600-l);
+    --fl-active-lightness-background: var(--fl-gray-100-l);
+
+    --fl-active-lightness-surface: 100%;
+    --fl-active-lightness-border: var(--fl-gray-400-l);
+    --fl-shadow-color-l: 20%;
+
+    /* Update computed colors based on new lightness values */
+    --fl-color-primary: hsl(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+    --fl-color-accent: hsl(
+      var(--fl-current-hue-accent),
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text-muted)
+    );
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+  }
+
+  body[data-theme="dark"] {
+    --fl-active-lightness-primary: 60%;
+    --fl-active-lightness-accent: 60%;
+    --fl-active-lightness-text: var(--fl-gray-100-l);
+
+    --fl-active-lightness-text-muted: var(--fl-gray-400-l);
+    --fl-active-lightness-background: var(--fl-gray-900-l);
+    --fl-active-lightness-surface: var(--fl-gray-800-l);
+
+    --fl-active-lightness-border: var(--fl-gray-600-l);
+    --fl-shadow-color-l: 5%;
+
+    /* Update computed colors based on new lightness values */
+    --fl-color-primary: hsl(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary)
+    );
+    --fl-color-accent: hsl(
+      var(--fl-current-hue-accent),
+      var(--fl-current-saturation-accent),
+      var(--fl-active-lightness-accent)
+    );
+    --fl-color-secondary: var(--fl-color-accent);
+    --fl-color-text: hsl(
+
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text)
+    );
+    --fl-color-text-muted: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-text-muted)
+    );
+
+    --fl-color-background: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-background)
+    );
+    --fl-color-surface: hsl(
+      var(--fl-current-hue-text),
+
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-surface)
+    );
+    --fl-color-border: hsl(
+      var(--fl-current-hue-text),
+      var(--fl-current-saturation-text),
+      var(--fl-active-lightness-border)
+    );
+  }
 }
 
 /* ==========================================================================
-   CSS CUSTOM PROPERTIES - MINIMALIST PALETTES & SEMANTIC MAPPING
+   BASE STYLES (Global HTML element styling)
    ========================================================================== */
+@layer base {
+  body {
+    font-family: var(--fl-font-family-base);
+    font-size: var(--fl-font-size-base);
+    line-height: var(--fl-line-height-normal);
+    color: var(--fl-color-text); /* Changed to use --fl-color-text directly */
+    background-color: var(--fl-color-background); /* Changed to use --fl-color-background directly */
 
-:root {
-  /* Default Minimalist Palette (Core: Clean, subtle, sophisticated) */
-  --fl-minimalist-palette-primary: 255, 255, 255; /* Crisp White */
-  --fl-minimalist-palette-secondary: 248, 249, 250; /* Light Gray Background */
-  --fl-minimalist-palette-accent: 0, 122, 255; /* Apple Blue Accent */
-  --fl-minimalist-palette-text: 29, 29, 31; /* Dark Gray for Readability */
-  --fl-minimalist-palette-muted:
-    134, 134, 139; /* Muted Gray for Secondary Info */
-  --fl-minimalist-palette-border: 210, 210, 215; /* Subtle Border Gray */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-image: var(--fl-noise-texture); /* Apply subtle noise texture */
+    background-size: 4px 4px;
+    background-repeat: repeat;
+  }
 
-  /* Minimalist - Monochromatic Cool (Professional calm) */
 
-  --fl-minimalist-mono-cool-palette-primary: 242, 242, 247; /* Cool Off-White */
-  --fl-minimalist-mono-cool-palette-secondary:
-    233, 235, 238; /* Light Cool Gray */
-  --fl-minimalist-mono-cool-palette-accent: 95, 124, 138; /* Muted Slate Blue */
-  --fl-minimalist-mono-cool-palette-text: 44, 62, 80; /* Deep Charcoal */
-  --fl-minimalist-mono-cool-palette-muted: 143, 168, 184; /* Medium Cool Gray */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--fl-font-family-heading);
+    line-height: var(--fl-line-height-tight);
+    color: var(--fl-color-text); /* Changed to use --fl-color-text directly */
+    text-wrap: balance; /* Optimize text wrapping for headings */
+  }
 
-  --fl-minimalist-mono-cool-palette-border:
-    206, 212, 218; /* Light Cool Border */
+  h1 {
 
-  /* Minimalist - Warm Neutrals (Approachable warmth) */
-  --fl-minimalist-warm-neutral-palette-primary:
-    253, 251, 248; /* Creamy White */
-  --fl-minimalist-warm-neutral-palette-secondary:
-    242, 237, 230; /* Soft Beige */
-  --fl-minimalist-warm-neutral-palette-accent:
-    139, 128, 85; /* Earthy Olive Green */
-  --fl-minimalist-warm-neutral-palette-text: 74, 68, 62; /* Soft Dark Brown */
+    font-size: var(--fl-font-size-5xl);
+  }
+  h2 {
+    font-size: var(--fl-font-size-4xl);
+  }
+  h3 {
+    font-size: var(--fl-font-size-3xl);
+  }
 
-  --fl-minimalist-warm-neutral-palette-muted:
-    163, 157, 144; /* Muted Warm Gray */
-  --fl-minimalist-warm-neutral-palette-border:
-    217, 210, 198; /* Light Warm Border */
+  h4 {
+    font-size: var(--fl-font-size-2xl);
+  }
 
-  /* Minimalist - High-Contrast Minimal (Bold simplicity) */
-  --fl-minimalist-high-contrast-palette-primary: 255, 255, 255; /* Pure White */
-  --fl-minimalist-high-contrast-palette-secondary: 0, 0, 0; /* Pure Black */
-  --fl-minimalist-high-contrast-palette-accent:
-    10, 61, 98; /* Deep Navy Accent */
-  --fl-minimalist-high-contrast-palette-text: 26, 26, 26; /* Near Black */
-  --fl-minimalist-high-contrast-palette-muted: 102, 102, 102; /* Medium Gray */
-  --fl-minimalist-high-contrast-palette-border:
-    51, 51, 51; /* Dark Gray Border */
+  h5 {
+    font-size: var(--fl-font-size-xl);
+  }
+  h6 {
 
-  /* Typography */
-  --fl-minimalist-font-system:
-    -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
-  --fl-minimalist-font-mono:
-    "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New",
-    monospace;
+    font-size: var(--fl-font-size-lg);
+  }
 
-  /* Spacing System (Apple-inspired) */
+  p {
+    margin-bottom: var(--fl-spacing-md);
+  }
 
-  --fl-minimalist-space-xs: 0.25rem; /* 4px */
-  --fl-minimalist-space-sm: 0.5rem; /* 8px */
-  --fl-minimalist-space-md: 1rem; /* 16px */
-  --fl-minimalist-space-lg: 1.5rem; /* 24px */
-  --fl-minimalist-space-xl: 2rem; /* 32px */
-  --fl-minimalist-space-2xl: 3rem; /* 48px */
-  --fl-minimalist-space-3xl: 4rem; /* 64px */
+  a {
 
-  /* Border Radius */
-  --fl-minimalist-radius-sm: 0.375rem; /* 6px */
-  --fl-minimalist-radius-md: 0.5rem; /* 8px */
-  --fl-minimalist-radius-lg: 0.75rem; /* 12px */
-  --fl-minimalist-radius-xl: 1rem; /* 16px */
+    transition: color var(--fl-transition-fast);
+  }
 
-  /* Shadows (Subtle, Apple-like) */
 
-  --fl-minimalist-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --fl-minimalist-shadow-md:
-    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  a:hover {
 
-  --fl-minimalist-shadow-lg:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --fl-minimalist-shadow-xl:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    color: var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+  }
 
-  /* Transitions */
-  --fl-minimalist-transition-fast: 150ms ease-in-out;
-  --fl-minimalist-transition-normal: 300ms ease-in-out;
+  a:focus-visible {
+    /* More integrated focus style */
+    outline: none;
 
-  --fl-minimalist-transition-slow: 500ms ease-in-out;
+    box-shadow: 0 0 0 2px var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+    border-radius: var(--fl-radius-sm);
+    transition: box-shadow var(--fl-transition-fast);
+  }
+
+  button {
+    transition:
+      background-color var(--fl-transition-fast),
+      transform var(--fl-transition-fast),
+      box-shadow var(--fl-transition-fast);
+  }
+
+  button:focus-visible {
+    /* More integrated focus style */
+
+    outline: none;
+    box-shadow: 0 0 0 2px var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+    border-radius: var(--fl-radius-sm);
+
+    transition: box-shadow var(--fl-transition-fast);
+  }
 }
 
 /* ==========================================================================
-   SEMANTIC COLOR MAPPING (Driven by current palette choice)
+   UTILITIES (Single-purpose, reusable classes)
    ========================================================================== */
-.fl-minimalist {
-  /* Default Minimalist palette mapping */
-  --fl-color-primary-rgb: var(--fl-minimalist-palette-primary);
-  --fl-color-secondary-rgb: var(--fl-minimalist-palette-secondary);
-  --fl-color-accent-rgb: var(--fl-minimalist-palette-accent);
-  --fl-color-text-rgb: var(--fl-minimalist-palette-text);
-  --fl-color-muted-rgb: var(--fl-minimalist-palette-muted);
-  --fl-color-border-rgb: var(--fl-minimalist-palette-border);
-
-  /* Semantic variables for direct use in components */
-  --fl-bg-primary: rgba(var(--fl-color-primary-rgb), 1);
-  --fl-bg-secondary: rgba(var(--fl-color-secondary-rgb), 1);
-  --fl-text-color: rgba(var(--fl-color-text-rgb), 1);
-  --fl-text-muted: rgba(var(--fl-color-muted-rgb), 1);
-  --fl-border-color: rgba(var(--fl-color-border-rgb), 1);
-  --fl-accent-color: rgba(var(--fl-color-accent-rgb), 1);
-
-  font-family: var(--fl-minimalist-font-system);
-  background-color: var(--fl-bg-primary); /* Use semantic variable */
-  color: var(--fl-text-color); /* Use semantic variable */
-
-  line-height: 1.6;
-}
-
-/* ==========================================================================
-   PALETTE VARIANT CLASSES (Redefine semantic variables based on desired palette)
-   ========================================================================== */
-
-/* Cool Monochromatic Variant */
-.fl-minimalist--mono-cool {
-  --fl-color-primary-rgb: var(--fl-minimalist-mono-cool-palette-primary);
-  --fl-color-secondary-rgb: var(--fl-minimalist-mono-cool-palette-secondary);
-  --fl-color-accent-rgb: var(--fl-minimalist-mono-cool-palette-accent);
-  --fl-color-text-rgb: var(--fl-minimalist-mono-cool-palette-text);
-  --fl-color-muted-rgb: var(--fl-minimalist-mono-cool-palette-muted);
-  --fl-color-border-rgb: var(--fl-minimalist-mono-cool-palette-border);
-}
-
-/* Warm Neutral Variant */
-.fl-minimalist--warm-neutral {
-  --fl-color-primary-rgb: var(--fl-minimalist-warm-neutral-palette-primary);
-  --fl-color-secondary-rgb: var(--fl-minimalist-warm-neutral-palette-secondary);
-  --fl-color-accent-rgb: var(--fl-minimalist-warm-neutral-palette-accent);
-  --fl-color-text-rgb: var(--fl-minimalist-warm-neutral-palette-text);
-  --fl-color-muted-rgb: var(--fl-minimalist-warm-neutral-palette-muted);
-  --fl-color-border-rgb: var(--fl-minimalist-warm-neutral-palette-border);
-}
-
-/* High Contrast Variant */
-.fl-minimalist--high-contrast {
-  --fl-color-primary-rgb: var(--fl-minimalist-high-contrast-palette-primary);
-  --fl-color-secondary-rgb: var(
-    --fl-minimalist-high-contrast-palette-secondary
-  );
-
-  --fl-color-accent-rgb: var(--fl-minimalist-high-contrast-palette-accent);
-  --fl-color-text-rgb: var(--fl-minimalist-high-contrast-palette-text);
-  --fl-color-muted-rgb: var(--fl-minimalist-high-contrast-palette-muted);
-  --fl-color-border-rgb: var(--fl-minimalist-high-contrast-palette-border);
-}
-
-/* ==========================================================================
-   BASE STYLES (NOW USE SEMANTIC VARIABLES)
-
-   ========================================================================== */
-
-/* (No change needed here as .fl-minimalist already uses semantic vars) */
-
-/* ==========================================================================
-   COMPONENTS (NOW USE SEMANTIC VARIABLES)
-   ========================================================================== */
-
-.fl-btn--minimalist {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: var(--fl-minimalist-space-sm);
-  padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-lg);
-  border: 1px solid var(--fl-border-color); /* Use semantic variable */
-  border-radius: var(--fl-minimalist-radius-md);
-
-  background-color: var(--fl-bg-primary); /* Use semantic variable */
-  color: var(--fl-text-color); /* Use semantic variable */
-  font-family: var(--fl-minimalist-font-system);
-  font-size: 0.875rem;
-  font-weight: 500;
-
-  text-decoration: none;
-  cursor: pointer;
-  transition: all var(--fl-minimalist-transition-fast);
-  box-shadow: var(--fl-minimalist-shadow-sm);
-}
-
-.fl-btn--minimalist:hover {
-  background-color: var(--fl-bg-secondary); /* Use semantic variable */
-  border-color: var(--fl-text-muted); /* Use semantic variable */
-  box-shadow: var(--fl-minimalist-shadow-md);
-  transform: translateY(-1px);
-}
-
-.fl-btn--minimalist:focus {
-  outline: 2px solid var(--fl-accent-color); /* Use semantic variable */
-  outline-offset: 2px;
-}
-
-.fl-btn--minimalist:active {
-  transform: translateY(0);
-  box-shadow: var(--fl-minimalist-shadow-sm);
-}
-
-/* Primary Button Variant */
-.fl-btn--minimalist.fl-btn--primary {
-  background-color: var(--fl-accent-color); /* Use semantic variable */
-  border-color: var(--fl-accent-color); /* Use semantic variable */
-  color: var(--fl-bg-primary); /* Use semantic variable */
-}
-
-.fl-btn--minimalist.fl-btn--primary:hover {
-  /* For precise opacity changes, consider using RGB values here */
-  background-color: rgba(var(--fl-color-accent-rgb), 0.9);
-  border-color: rgba(var(--fl-color-accent-rgb), 0.9);
-}
-
-/* Button Sizes - NO CHANGE */
-.fl-btn--minimalist.fl-btn--sm {
-  padding: var(--fl-minimalist-space-xs) var(--fl-minimalist-space-md);
-  font-size: 0.75rem;
-}
-
-.fl-btn--minimalist.fl-btn--lg {
-  padding: var(--fl-minimalist-space-md) var(--fl-minimalist-space-2xl);
-  font-size: 1rem;
-}
-
-/* ==========================================================================
-   CARDS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
-   ========================================================================== */
-
-.fl-card--minimalist {
-  background-color: var(--fl-bg-primary); /* Use semantic variable */
-  border: 1px solid var(--fl-border-color); /* Use semantic variable */
-  border-radius: var(--fl-minimalist-radius-lg);
-  box-shadow: var(--fl-minimalist-shadow-sm);
-  transition: all var(--fl-minimalist-transition-normal);
-  overflow: hidden;
-}
-
-.fl-card--minimalist:hover {
-  box-shadow: var(--fl-minimalist-shadow-lg);
-
-  transform: translateY(-2px);
-}
-
-.fl-card__header--minimalist {
-  padding: var(--fl-minimalist-space-lg);
-
-  border-bottom: 1px solid var(--fl-border-color); /* Use semantic variable */
-}
-
-.fl-card__title--minimalist {
-  margin: 0;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--fl-text-color); /* Use semantic variable */
-}
-
-.fl-card__content--minimalist {
-  padding: var(--fl-minimalist-space-lg);
-}
-
-.fl-card__text--minimalist {
-  margin: 0;
-  color: var(--fl-text-muted); /* Use semantic variable */
-  line-height: 1.5;
-}
-
-.fl-card__footer--minimalist {
-  padding: var(--fl-minimalist-space-lg);
-  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
-  background-color: var(--fl-bg-secondary); /* Use semantic variable */
-}
-
-/* ==========================================================================
-   FORMS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
-   ========================================================================== */
-
-.fl-form--minimalist {
-  max-width: 100%;
-}
-
-.fl-form__group--minimalist {
-  margin-bottom: var(--fl-minimalist-space-lg);
-}
-
-.fl-form__label--minimalist {
-  display: block;
-  margin-bottom: var(--fl-minimalist-space-sm);
-
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--fl-text-color); /* Use semantic variable */
-}
-
-.fl-form__input--minimalist,
-.fl-form__textarea--minimalist,
-.fl-form__select--minimalist {
-  width: 100%;
-
-  padding: var(--fl-minimalist-space-sm) var(--fl-minimalist-space-md);
-  border: 1px solid var(--fl-border-color); /* Use semantic variable */
-  border-radius: var(--fl-minimalist-radius-md);
-  background-color: var(--fl-bg-primary); /* Use semantic variable */
-  color: var(--fl-text-color); /* Use semantic variable */
-  font-family: var(--fl-minimalist-font-system);
-  font-size: 0.875rem;
-  transition: all var(--fl-minimalist-transition-fast);
-}
-
-.fl-form__input--minimalist:focus,
-.fl-form__textarea--minimalist:focus,
-.fl-form__select--minimalist:focus {
-  outline: none;
-  border-color: var(--fl-accent-color); /* Use semantic variable */
-  box-shadow: 0 0 0 3px rgba(var(--fl-color-accent-rgb), 0.1); /* Use RGB value */
-}
-
-.fl-form__textarea--minimalist {
-  resize: vertical;
-  min-height: 100px;
-}
-
-/* ==========================================================================
-   NAVIGATION - MINIMALIST (NOW USE SEMANTIC VARIABLES)
-   ========================================================================== */
-
-.fl-nav--minimalist {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--fl-minimalist-space-md) 0;
-  background-color: var(--fl-bg-primary); /* Use semantic variable */
-
-  border-bottom: 1px solid var(--fl-border-color); /* Use semantic variable */
-}
-
-.fl-nav__brand--minimalist {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--fl-text-color); /* Use semantic variable */
-  text-decoration: none;
-}
-
-.fl-nav__menu--minimalist {
-  display: flex;
-  align-items: center;
-  gap: var(--fl-minimalist-space-xl);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.fl-nav__link--minimalist {
-  color: var(--fl-text-muted); /* Use semantic variable */
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color var(--fl-minimalist-transition-fast);
-}
-
-.fl-nav__link--minimalist:hover,
-.fl-nav__link--minimalist.fl-nav__link--active {
-  color: var(--fl-text-color); /* Use semantic variable */
-}
-
-/* ==========================================================================
-   HERO SECTIONS - MINIMALIST (NOW USE SEMANTIC VARIABLES)
-
-   ========================================================================== */
-
-.fl-hero--minimalist {
-  padding: var(--fl-minimalist-space-3xl) 0;
-  text-align: center;
-  background-color: var(--fl-bg-secondary); /* Use semantic variable */
-}
-
-.fl-hero__title--minimalist {
-  margin: 0 0 var(--fl-minimalist-space-lg) 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--fl-text-color); /* Use semantic variable */
-  line-height: 1.2;
-}
-
-.fl-hero__subtitle--minimalist {
-  margin: 0 0 var(--fl-minimalist-space-xl) 0;
-  font-size: 1.125rem;
-  color: var(--fl-text-muted); /* Use semantic variable */
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.fl-hero__cta--minimalist {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--fl-minimalist-space-md);
-  flex-wrap: wrap;
-}
-
-/* ==========================================================================
-   FOOTER - MINIMALIST (NOW USE SEMANTIC VARIABLES)
-   ========================================================================== */
-
-.fl-footer--minimalist {
-  padding: var(--fl-minimalist-space-2xl) 0;
-  background-color: var(--fl-bg-secondary); /* Use semantic variable */
-  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
-}
-
-.fl-footer__content--minimalist {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--fl-minimalist-space-xl);
-  margin-bottom: var(--fl-minimalist-space-xl);
-}
-
-.fl-footer__section--minimalist {
-  /* Grid item styles handled by parent */
-}
-
-.fl-footer__title--minimalist {
-  margin: 0 0 var(--fl-minimalist-space-md) 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--fl-text-color); /* Use semantic variable */
-}
-
-.fl-footer__link--minimalist {
-  color: var(--fl-text-muted); /* Use semantic variable */
-  text-decoration: none;
-  font-size: 0.875rem;
-  transition: color var(--fl-minimalist-transition-fast);
-}
-
-.fl-footer__link--minimalist:hover {
-  color: var(--fl-text-color); /* Use semantic variable */
-}
-
-.fl-footer__bottom--minimalist {
-  padding-top: var(--fl-minimalist-space-lg);
-  border-top: 1px solid var(--fl-border-color); /* Use semantic variable */
-  text-align: center;
-}
-
-.fl-footer__copyright--minimalist {
-  margin: 0;
-
-  font-size: 0.75rem;
-  color: var(--fl-text-muted); /* Use semantic variable */
-}
-
-/* ==========================================================================
-   RESPONSIVE UTILITIES
-   ========================================================================== */
-
-@media (max-width: 768px) {
-  .fl-nav--minimalist {
+@layer utilities {
+  .fl-d-flex {
+    display: flex;
+  }
+  .fl-d-grid {
+    display: grid;
+  }
+
+  .fl-flex-col {
     flex-direction: column;
-    gap: var(--fl-minimalist-space-md);
+
+  }
+  .fl-items-center {
+    align-items: center;
+  }
+  .fl-justify-center {
+    justify-content: center;
+  }
+  .fl-gap-sm {
+    gap: var(--fl-spacing-sm);
   }
 
-  .fl-nav__menu--minimalist {
-    gap: var(--fl-minimalist-space-lg);
+  .fl-gap-md {
+    gap: var(--fl-spacing-md);
+  }
+  .fl-gap-lg {
+    gap: var(--fl-spacing-lg);
   }
 
-  .fl-hero--minimalist {
-    padding: var(--fl-minimalist-space-2xl) 0;
+  .fl-text-center {
+    text-align: center;
   }
 
-  .fl-hero__cta--minimalist {
-    flex-direction: column;
+  .fl-text-primary {
+    color: var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+  }
+  .fl-text-secondary {
+    color: var(--fl-color-secondary); /* Changed to use --fl-color-secondary directly */
+
+  }
+  .fl-text-accent {
+    color: var(--fl-color-accent); /* Changed to use --fl-color-accent directly */
   }
 
-  .fl-footer__content--minimalist {
+  .fl-text-muted {
+    color: var(--fl-color-text-muted); /* Changed to use --fl-color-text-muted directly */
+  }
+
+
+  .fl-bg-primary {
+    background-color: var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+  }
+
+  .fl-bg-secondary {
+
+    background-color: var(--fl-color-secondary); /* Changed to use --fl-color-secondary directly */
+  }
+
+  .fl-bg-surface {
+    background-color: var(--fl-color-surface); /* Changed to use --fl-color-surface directly */
+  }
+
+  .fl-bg-background {
+    background-color: var(--fl-color-background); /* Changed to use --fl-color-background directly */
+  }
+
+  .fl-p-sm {
+    padding: var(--fl-spacing-sm);
+  }
+
+  .fl-p-md {
+    padding: var(--fl-spacing-md);
+  }
+
+
+  .fl-p-lg {
+    padding: var(--fl-spacing-lg);
+  }
+
+  .fl-m-auto {
+    margin: auto;
+  }
+
+  .fl-rounded-md {
+    border-radius: var(--fl-radius-md);
+  }
+
+  .fl-shadow-md {
+    box-shadow: var(--fl-shadow-md);
+  }
+
+  .fl-sr-only {
+    /* Visually hide content but keep it accessible to screen readers */
+
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+
+    border-width: 0;
+
+  }
+
+  /* Aspect Ratio Utilities */
+
+
+  .fl-aspect-16x9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  .fl-aspect-1x1 {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Backdrop Filter Utility (Glassmorphism-lite) */
+  .fl-backdrop-blur-md {
+
+    backdrop-filter: blur(var(--fl-blur-md));
+  }
+}
+
+/* ==========================================================================
+   COMPONENTS (Reusable UI elements)
+
+   ========================================================================== */
+@layer components {
+  /* Example Button Component */
+  .fl-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+    padding: var(--fl-spacing-sm) var(--fl-spacing-md);
+    border-radius: var(--fl-radius-md);
+
+    font-weight: var(--fl-font-weight-medium);
+
+    cursor: pointer;
+
+    transition:
+      background-color var(--fl-transition-normal),
+      transform var(--fl-transition-normal),
+      box-shadow var(--fl-transition-normal);
+  }
+
+
+  .fl-btn--primary {
+
+    background-color: var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+
+    color: hsl(
+      var(--fl-color-white-rgb)
+
+    ); /* White text on primary background */
+  }
+
+  .fl-btn--primary:hover {
+    /* Updated to direct HSL variables for better compatibility */
+
+    background-color: hsl(
+      var(--fl-current-hue-primary),
+
+      var(--fl-current-saturation-primary),
+
+      calc(var(--fl-active-lightness-primary) - 10%)
+    ); /* Darken on hover */
+    transform: translateY(-2px);
+    box-shadow: var(--fl-shadow-md);
+
+  }
+
+  .fl-btn--outline {
+    background-color: transparent;
+
+    border: var(--fl-border-thin) var(--fl-color-border); /* Changed to use --fl-color-border directly */
+    color: var(--fl-color-text); /* Changed to use --fl-color-text directly */
+  }
+
+  .fl-btn--outline:hover {
+    /* Updated to direct HSLA variables for better compatibility */
+    background-color: hsla(
+      var(--fl-current-hue-primary),
+      var(--fl-current-saturation-primary),
+      var(--fl-active-lightness-primary),
+
+      var(--fl-opacity-xs)
+    );
+    border-color: var(--fl-color-primary); /* Changed to use --fl-color-primary directly */
+    transform: translateY(-2px);
+  }
+
+  .fl-btn__icon {
+    width: 1em; /* Adjust size relative to font-size */
+    height: 1em;
+    margin-left: var(--fl-spacing-xs);
+  }
+
+  /* Example Card Component */
+  .fl-card {
+    background-color: var(--fl-color-surface); /* Changed to use --fl-color-surface directly */
+    border-radius: var(--fl-radius-lg);
+
+    box-shadow: var(--fl-shadow-sm);
+    overflow: hidden;
+    transition:
+      transform var(--fl-transition-normal),
+      box-shadow var(--fl-transition-normal);
+  }
+
+
+  .fl-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: var(--fl-shadow-lg);
+  }
+
+
+  .fl-card__media {
+    width: 100%;
+    /* Use aspect-ratio for fluid height instead of fixed height */
+    aspect-ratio: 16 / 9; /* Default aspect ratio for media */
+
+    overflow: hidden;
+
+  }
+
+  .fl-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  .fl-card__content {
+    padding: var(--fl-spacing-md);
+  }
+
+  .fl-card__title {
+    font-size: var(--fl-font-size-xl);
+    margin-bottom: var(--fl-spacing-sm);
+
+  }
+
+  .fl-card__text {
+    font-size: var(--fl-font-size-sm);
+    color: var(--fl-color-text-muted); /* Changed to use --fl-color-text-muted directly */
+  }
+
+
+  .fl-card__footer {
+    padding: var(--fl-spacing-md);
+    border-top: var(--fl-border-thin)
+
+      /* Updated to direct HSLA variables for better compatibility */
+      hsla(
+        var(--fl-current-hue-text),
+        var(--fl-current-saturation-text),
+        var(--fl-active-lightness-border),
+        var(--fl-opacity-sm)
+      );
+    display: flex;
+
+    justify-content: flex-end;
+    gap: var(--fl-spacing-sm);
+
+  }
+}
+
+/* ==========================================================================
+   LAYOUTS (Page-level structural components)
+
+   ========================================================================== */
+@layer layouts {
+  .fl-container {
+    max-width: var(--fl-breakpoint-xl);
+
+    margin-left: auto;
+    margin-right: auto;
+
+
+    padding-left: var(--fl-spacing-md);
+    padding-right: var(--fl-spacing-md);
+  }
+
+  @media (min-width: 768px) {
+    .fl-container {
+      padding-left: var(--fl-spacing-lg);
+
+
+      padding-right: var(--fl-spacing-lg);
+    }
+  }
+
+  .fl-section {
+    padding-top: var(--fl-section-padding);
+    padding-bottom: var(--fl-section-padding);
+  }
+
+
+  .fl-grid-cols-2 {
+    display: grid;
     grid-template-columns: 1fr;
+
+    gap: var(--fl-spacing-lg);
+  }
+
+  @media (min-width: 768px) {
+    .fl-grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .fl-grid-cols-3 {
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--fl-spacing-lg);
+  }
+
+  @media (min-width: 1024px) {
+    .fl-grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+
+    }
+  }
+
+}
+
+
+/* ==========================================================================
+   AWWWARDS-SPECIFIC (Advanced visual effects and interactions)
+   ========================================================================== */
+@layer awwwards-specific {
+  /* Example: Text Gradient */
+
+  .fl-text-gradient {
+    background: linear-gradient(
+      90deg,
+      /* Updated to direct HSL variables for better compatibility */
+        hsl(
+          var(--fl-current-hue-primary),
+          var(--fl-current-saturation-primary),
+          var(--fl-active-lightness-primary)
+        ),
+      hsl(
+
+        var(--fl-current-hue-accent),
+        var(--fl-current-saturation-accent),
+        var(--fl-active-lightness-accent)
+      )
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback */
+  }
+
+  /* Example: Subtle Interactive Border Pulse (for buttons/cards) */
+  .fl-interactive-border-pulse {
+    position: relative;
+    overflow: hidden;
+    border: var(--fl-border-thin)
+      /* Updated to direct HSLA variables for better compatibility */
+      hsla(
+        var(--fl-current-hue-text),
+        var(--fl-current-saturation-text),
+        var(--fl-active-lightness-border),
+        var(--fl-opacity-md)
+      );
+  }
+
+  .fl-interactive-border-pulse::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+
+      /* Updated to direct HSLA variables for better compatibility */
+        hsla(
+
+          var(--fl-current-hue-primary),
+          var(--fl-current-saturation-primary),
+          var(--fl-active-lightness-primary),
+          0.1
+        )
+
+        0%,
+      transparent 70%
+
+    );
+    opacity: 0;
+    transition: opacity 0.3s var(--fl-transition-bezier);
+    pointer-events: none;
+  }
+
+
+  .fl-interactive-border-pulse:hover::before {
+
+    opacity: 1;
+  }
+
+  /* Animated Underline for Links */
+  .fl-link-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .fl-link-underline::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 1px; /* Adjust thickness as needed */
+    bottom: -2px; /* Adjust distance from text */
+    left: 0;
+    background-color: currentColor; /* Matches text color, or use var(--fl-color-accent) */
+    transition: width 0.3s var(--fl-transition-bezier);
+  }
+  .fl-link-underline:hover::after,
+  .fl-link-underline:focus-visible::after {
+
+    width: 100%;
   }
 }
+
+/* ==========================================================================
+   EXPERIMENTAL (Features with developing browser support or advanced techniques)
+
+   ========================================================================== */
+@layer experimental {
+  /* Ensure content-visibility is hidden for off-screen content */
+
+  .fl-content-hidden {
+    content-visibility: hidden;
+  }
+
+
+  /* ==========================================================================
+     CSS SCROLL-TRIGGERED ANIMATIONS (Awwwards Enhancement via JavaScript)
+     Elements with .fl-animate-on-scroll will get the .is-visible class
+     when they enter the viewport, triggering these transitions/animations.
+     ========================================================================== */
+
+  /* Example: Fade-in and Slide-up on scroll */
+  .fl-animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Smoother, Awwwards-level easing for transitions */
+    transition:
+      opacity 0.8s var(--fl-transition-bezier),
+      transform 0.8s var(--fl-transition-bezier);
+
+    will-change: opacity, transform; /* Optimize for animation performance */
+  }
+
+  .fl-animate-on-scroll.is-visible {
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+} /* End @layer experimental */
